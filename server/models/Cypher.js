@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const { User } = require(".");
 
 const messageSchema = require("./Message");
 
@@ -15,6 +16,14 @@ const cypherSchema = new Schema({
         require: true,
         minLength: 1,
         maxLength: 500,
+      },
+      messageAuthor: {
+        type: String,
+        require: true,
+      },
+      userId: {
+        type: String,
+        require: true,
       },
       createdAt: {
         type: Date,
