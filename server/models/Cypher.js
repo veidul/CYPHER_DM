@@ -9,6 +9,14 @@ const cypherSchema = new Schema({
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
+  users: [
+    {
+      userId: {
+        type: String,
+        unique: true,
+      },
+    },
+  ],
   messages: [
     {
       messageText: {

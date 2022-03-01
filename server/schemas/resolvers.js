@@ -45,15 +45,12 @@ const resolvers = {
     addCypher: async (parent, { userId }) => {
       return Cypher.create({ userId });
     },
-    addMessage: async (
-      parent,
-      { userId, cypherId, commentText, messageAuthor }
-    ) => {
+    addMessage: async (parent, { cypherId, messageText, messageAuthor }) => {
       return Cypher.findOneAndUpdate(
         { _id: cypherId },
         {
           // we will want to find userName from the userId.
-          $addToSet: { comments: { commentText, messageAuthor, userId } },
+          $addToSet: { messages: { messageText, messageAuthor } },
         },
         {
           new: true,
