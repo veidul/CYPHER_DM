@@ -1,4 +1,5 @@
 import React from "react";
+import "./assets/css/App.css";
 import "./assets/css/output.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {
