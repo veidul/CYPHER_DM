@@ -16,30 +16,34 @@ const typeDefs = gql`
   }
 
   type Message {
-    _id: ID
+    messageId: ID
     createdAt: String
     messageText: String
     messageAuthor: String
+    userId: ID
   }
+
   type Auth {
     token: ID!
     user: User
   }
+
   type Query {
     me: User
-    cyphers: [Cypher]!
     cyphers(_id: ID): Cypher
   }
+
   type Mutation {
     login(email: String!, password: String!): Auth
     addCypher: Cypher
     addUser(username: String!, email: String!, password: String!): Auth
     addMessage(
-      cypherId: String!
+      _id: ID!
       messageText: String!
       messageAuthor: String!
+      userId: ID!
     ): Cypher
-    addCypherUser(userId: String!, _id: String!): Cypher
+    addCypherUser(userId: ID!, _id: ID!): Cypher
   }
 `;
 module.exports = typeDefs;
