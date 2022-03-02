@@ -41,7 +41,7 @@ export const ADD_CYPHER_USER = gql`
     addCypherUser(userId: $userId, cypherId: $cypherId)
     _id
     user {
-      _id
+      userId
     }
   }
 `;
@@ -50,7 +50,7 @@ export const ADD_CYPHER = gql`
   mutation addCypher($userId: String!) {
     addCypher(userId: $userId)
     user {
-      _id
+      userId
     }
   }
 `;
