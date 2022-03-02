@@ -11,12 +11,10 @@ const resolvers = {
       }
       throw new AuthenticatioError("You need to be logged in!");
     },
-    cyphers: async () => {
+    cyphers: async (parent, { _id }) => {
       // may want to flip to a possitive number depending on how it is returned
-      return Cypher.find().sort({ createdAt: -1 });
-    },
-    cypher: async (parent, { cypherId }) => {
-      return Cypher.findOne({ _id: cypherId });
+      const params = _id ? { _id } : {};
+      return Matchup.find(params);
     },
   },
   Mutation: {
