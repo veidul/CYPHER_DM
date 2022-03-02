@@ -1,7 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { User } = require(".");
-
-const messageSchema = require("./Message");
+const dateFormat = require("../utils/dateFormat");
 
 const cypherSchema = new Schema({
   createdAt: {
