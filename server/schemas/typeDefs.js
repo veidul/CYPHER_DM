@@ -2,7 +2,7 @@ const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
-    _id: ID
+    userId: ID
     username: String
     email: String
     password: String
@@ -28,7 +28,7 @@ const typeDefs = gql`
   type Query {
     me: User
     cyphers: [Cypher]!
-    cypher(cypherId: ID!): Cypher
+    cyphers(_id: ID): Cypher
   }
   type Mutation {
     login(email: String!, password: String!): Auth
@@ -39,7 +39,7 @@ const typeDefs = gql`
       messageText: String!
       messageAuthor: String!
     ): Cypher
-    addCypherUser(userId: String!, cypherId: String!): Cypher
+    addCypherUser(userId: String!, _id: String!): Cypher
   }
 `;
 module.exports = typeDefs;
