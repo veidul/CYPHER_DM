@@ -32,7 +32,7 @@ async function startApolloServer(typeDefs, resolvers) {
   });
 
   io.on("connection", (socket) => {
-    console.log(socket.id)
+    console.log(`User Connected: ${socket.id}`)
 
     socket.on("disconnect", () => {
         console.log("User Disconnected", socket.id)
