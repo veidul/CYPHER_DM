@@ -5,7 +5,7 @@ export const LOGIN_USER = gql`
     login(email: $email, password: $password) {
       token
       user {
-        _id
+        userId
         username
       }
     }
@@ -17,7 +17,7 @@ export const ADD_USER = gql`
     addUser(username: $username, email: $email, password: $password) {
       token
       user {
-        _id
+        userId
         username
       }
     }
@@ -25,16 +25,25 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_MESSAGE = gql`
-  mutation addMessage($_id: ID!, $messageText: String!, $messageAuthor: String!, $userId: ID!) {
-    addMessage(_id: $_id, messageText: $messageText:, messageAuthor: $messageAuthor){
+  mutation addMessage(
+    $_id: ID!
+    $messageText: String!
+    $messageAuthor: String!
+    $userId: ID!
+  ) {
+    addMessage(
+      _id: $_id
+      messageText: $messageText
+      messageAuthor: $messageAuthor
+    ) {
       _id
       message {
-      messageText
-      messageAuthor
-      userId
-      }
+        messageText
+        messageAuthor
+        userId
       }
     }
+  }
 `;
 // might need to change id references
 export const ADD_CYPHER_USER = gql`

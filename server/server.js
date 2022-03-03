@@ -14,6 +14,10 @@ const app = express();
 async function startApolloServer(typeDefs, resolvers) {
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
+    cors: {
+      origin: "*",
+      credentials: true,
+    },
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
