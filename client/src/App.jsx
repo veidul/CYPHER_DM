@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import React from "react";
+import React, { useEffect } from "react";
 import "./assets/css/App.css";
 import "./assets/css/output.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -16,7 +16,7 @@ import Home from "./views/Home";
 import About from "./views/About";
 import Nav from "./components/Nav";
 
-const socket = io("https://localhost3001");
+const socketURL = io("https://localhost:3001");
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/",
@@ -31,12 +31,18 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
 function App() {
+
+  useEffect(() => {
+    const socket = socketURL
+  }, [])
+
   return (
     <ApolloProvider client={client}>
       <Router>
