@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "proxy": "http://localhost:3001",
   "scripts": {
-    "start": "react-scripts start",
     "dev": "npm run tailwind && vite",
     "build": "npm run tailwind && vite build",
     "tailwind": "npx tailwindcss build styles.css -o src/assets/css/output.css "
@@ -16,7 +15,8 @@
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.27.1",
     "react-router-dom": "^6.2.2",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^5.0.0",
+    "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
     "eslint": "^7.8.1",
