@@ -16,20 +16,21 @@ import About from "./views/About";
 import Nav from "./components/Nav";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/",
+  uri: "http://localhost:3001/graphql",
+  credentials: "same-origin",
 });
 
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: localStorage.getItem("token") || "",
+      Authorization: localStorage.getItem("token") || "",
     },
   };
 });
 
 const client = new ApolloClient({
-  uri: authLink.concat(httpLink),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

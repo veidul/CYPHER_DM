@@ -2,33 +2,31 @@ import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client"
 import { LOGIN_USER } from "../utils/mutations";
-
+import { useForm } from "react-hook-form";
 import Auth from "../utils/auth";
 
 const LoginForm = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [userFormData, setUserFormData] = useState({ email: "", password: ""});
-    const [validated] = useState(false);    const [login, {error, data}] = useMutation(LOGIN_USER);
+    const [login, {error, data}] = useMutation(LOGIN_USER);
 
     const handleInputChange = (event) => {
-        const {name, value } = event.target;
+        const {name, value} = event.target;
         setUserFormData({ ...userFormData, [name]: value });
     }
 
     const handleFormSubmit = async (event) => {
-        event.preventDefault();
         // add form validation here
         try {
             const {data} = await login({
-                variables: {...userFormData}
+                variables: {...userFormData},
             })
             Auth.login(data.login.token);
         } catch (err) {
             console.log(err);
-            setShowAlert(true);
         }
 
         setUserFormData({
-            username: "",
             email: "",
             password: "",
         });
@@ -41,7 +39,7 @@ return (
         Login To Your Account
     </div>
     <div className="mt-8">
-        <form action="#" autoComplete="off">
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="flex flex-col mb-2">
                 <div className="flex relative ">
                     <span className="rounded-l-md inline-flex  items-center px-3 border-t bg-white border-l border-b  border-gray-300 text-gray-500 shadow-sm text-sm">
@@ -50,7 +48,8 @@ return (
                             </path>
                         </svg>
                     </span>
-                    <input type="text" name="email" onChange={handleInputChange} value={userFormData.email} required className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Your email"/>
+                    <input type="text" {...register("email", { required: true, pattern: /.+@.+\..+/ })} onChange={handleInputChange} value={userFormData.email} required className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Your email"/>
+                    {errors.email && <span>Must enter a valid email address!</span>}
                     </div>
                 </div>
                 <div className="flex flex-col mb-6">
@@ -61,11 +60,12 @@ return (
                                 </path>
                             </svg>
                         </span>
-                        <input type="password" name="password" onChange={handleInputChange} value={userFormData.password} required className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Your password"/>
+                        <input type="password" {...register("password", { required: true, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/})} onChange={handleInputChange} value={userFormData.password} required className=" rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Your password"/>
+                        {errors.password && <span>Must enter a password that is minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!</span>}
                         </div>
                     </div>
                     <div className="flex w-full">
-                        <button disabled= {!(userFormData.email && userFormData.password)} onSubmit={handleFormSubmit} variant="success" type="submit" className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        <button disabled= {!(userFormData.email && userFormData.password)} type="submit" className="py-2 px-4  bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                             Login
                         </button>
                     </div>
