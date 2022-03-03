@@ -9,25 +9,28 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import Register from "./components/register";
+import LoginForm from "./components/Login";
 import Home from "./views/Home";
 import About from "./views/About";
 import Nav from "./components/Nav";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/",
+  uri: "http://localhost:3001/graphql",
+  credentials: "same-origin",
 });
 
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: localStorage.getItem("token") || "",
+      Authorization: localStorage.getItem("token") || "",
     },
   };
 });
 
 const client = new ApolloClient({
-  uri: authLink.concat(httpLink),
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -41,9 +44,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
-              <Route
-                render={() => <h1 className="display-2">Wrong page!</h1>}
-              />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<Register />} />
+              <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
             </Routes>
           </div>
         </>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Auth from "../utils/auth"
 
 export default function Nav() {
 	return (
@@ -19,6 +20,13 @@ export default function Nav() {
 						<Link to="/about" className="mr-5 hover:text-white">
 							About
 						</Link>
+						{Auth.loggedIn() ? (<Link onClick={Auth.logout} to="/login" className="mr-5 hover:text-white">
+							logout
+						</Link>) : (<Link to="/login" className="mr-5 hover:text-white">
+							login
+						</Link>)
+						
+						}
 					</nav>
 					<a
 						href="https://github.com/bemijonathan/Vite-react-tailwind-netlify-starter-kit"
