@@ -19,6 +19,13 @@ export default function Nav() {
 						<Link to="/about" className="mr-5 hover:text-white">
 							About
 						</Link>
+						{}
+						<Link to="/login" className="mr-5 hover:text-white">
+							login
+						</Link>
+						<Link to="/login" className="mr-5 hover:text-white">
+							logout
+						</Link>
 					</nav>
 					<a
 						href="https://github.com/bemijonathan/Vite-react-tailwind-netlify-starter-kit"
