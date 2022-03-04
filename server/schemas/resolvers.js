@@ -1,6 +1,8 @@
 const { AuthenticatioError } = require("apollo-server-express");
 const { User, Cypher } = require("../models");
 const { signToken } = require("../utils/auth");
+const { PubSub } = require('graphql-subscriptions');
+const pubsub = new PubSub();
 
 const resolvers = {
   Query: {
@@ -16,6 +18,11 @@ const resolvers = {
       const params = _id ? { _id } : {};
       return Matchup.find(params);
     },
+  },
+  Subscription: {
+    test: {
+      subscribe: () => pubsub.asyncIterator(['POST_CREATED']),
+    }
   },
   Mutation: {
     login: async (parent, { email, password }) => {
