@@ -16,11 +16,14 @@ const LoginForm = () => {
     }
 
     const handleFormSubmit = async (event) => {
+        event.preventDefault();
         // add form validation here
         try {
             const {data} = await login({
                 variables: {...userFormData},
             })
+            console.log(data)
+            // debugger;
             Auth.login(data.login.token);
         } catch (err) {
             console.log(err);
@@ -39,7 +42,7 @@ return (
         Login To Your Account
     </div>
     <div className="mt-8">
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form onSubmit={(e) => handleSubmit(handleFormSubmit(e))}>
             <div className="flex flex-col mb-2">
                 <div className="flex relative ">
                     <span className="rounded-l-md inline-flex  items-center px-3 border-t bg-white border-l border-b  border-gray-300 text-gray-500 shadow-sm text-sm">

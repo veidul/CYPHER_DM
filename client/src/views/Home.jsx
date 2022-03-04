@@ -1,6 +1,23 @@
 import React from "react";
+import { useMutation, useQuery } from "@apollo/client"
+import { ADD_CYPHER } from "../utils/mutations";
+import { GET_ME } from "../utils/queries"
 
 export default function componentName() {
+
+	// const[addCypher, {error, data}] = useMutation(ADD_CYPHER);
+  const{loading, data} = useQuery(GET_ME);
+
+	const onClick = async () => {
+	try {
+    
+    console.log(data)
+    // await addCypher()
+	}catch(err){
+		console.log(err)
+	}
+	}
+
   return (
     <>
       <div className="flex flex-row">
@@ -17,7 +34,7 @@ export default function componentName() {
     </div>
   </div>
 </div>
-      <button className="ml-auto mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+      <button onClick={onClick} className="ml-auto mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
        ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"> New Cypher </button>
       </div>
       <div className="flex flex-col h-3/4 bg-white border-2 ml-1 rounded-b border-black">
