@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npm run tailwind && vite",
     "build": "npm run tailwind && vite build",
-    "tailwind": "npx tailwindcss build styles.css -o src/assets/css/output.css "
+    "tailwind": "npx tailwindcss -i ./styles.css -o ./src/assets/css/output.css"
   },
   "dependencies": {
     "@apollo/client": "^3.5.10",
