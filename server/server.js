@@ -20,7 +20,7 @@ async function startApolloServer(typeDefs, resolvers) {
     server: httpServer,
     path: '/graphql',
   });
-  const serverCleanup = useServer({ }, wsServer);
+  const serverCleanup = useServer({}, wsServer);
 
   const server = new ApolloServer({
     // schema,
@@ -73,12 +73,11 @@ async function startApolloServer(typeDefs, resolvers) {
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client")));
+  } else {
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, "../client/index.html"));
+    });
   }
-
-  app.get("*", (req, res) => {
-    console.log("line 30 route is hit");
-    res.sendFile(path.join(__dirname, "../client/index.html"));
-  });
   httpServer.listen(PORT, () => {
     console.log(`GQL server running on http://localhost:${PORT}/graphql`)
     console.log(`WS server running on ws://localhost:${PORT}`)

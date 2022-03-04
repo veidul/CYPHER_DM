@@ -3,6 +3,10 @@ const { User, Cypher } = require("../models");
 const { signToken } = require("../utils/auth");
 const { PubSub } = require('graphql-subscriptions');
 const pubsub = new PubSub();
+const NEW_CYPHER_USER = "NEW_USER";
+const NEW_MESSAGE = "NEW_MESSAGE";
+const NEW_CYPHER = "NEW_CYPHER"
+
 
 const resolvers = {
   Query: {
@@ -20,8 +24,14 @@ const resolvers = {
     },
   },
   Subscription: {
-    test: {
-      subscribe: () => pubsub.asyncIterator(['POST_CREATED']),
+    newCypherUser: {
+      subscribe: () => pubsub.asyncIterator([NEW_CYPHER_USER]),
+    },
+    newMessage: {
+      subscribe: () => pubsub.asyncIterator([NEW_MESSAGE])
+    },
+    newCypher: {
+      subscribe: () => pubsub.asyncIterator([NEW_CYPHER])
     }
   },
   Mutation: {
@@ -48,10 +58,11 @@ const resolvers = {
       return { token, user };
     },
     addCypher: async (parent, { userId }) => {
-      return Cypher.create({ userId });
+      await Cypher.create({ userId });
+      return pubsub.publish(NEW_CYPHER, { userId })
     },
     addMessage: async (parent, { _id, messageText, messageAuthor, userId }) => {
-      return Cypher.findOneAndUpdate(
+      await Cypher.findOneAndUpdate(
         { _id },
         {
           // we will want to find userName from the userId.
@@ -62,15 +73,17 @@ const resolvers = {
           runValidators: true,
         }
       );
+      return pubsub.publish(NEW_MESSAGE, { _id, messageText, messageAuthor, userId })
     },
     addCypherUser: async (parent, { userId, _id }) => {
-      return Cypher.findOneAndUpdate(
+      await Cypher.findOneAndUpdate(
         { _id },
         {
           // we might want to update this to include username and userId
           $addToSet: { User: { userId } },
         }
       );
+      return pubsub.publish(NEW_CYPHER_USER, { userId, _id })
     },
   },
 };
