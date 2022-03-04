@@ -33,10 +33,7 @@ const typeDefs = gql`
     cyphers(_id: ID): Cypher
   }
 
-  type Subscription {
-    test: String
-  }
-
+  
   type Mutation {
     login(email: String!, password: String!): Auth
     addCypher: Cypher
@@ -46,8 +43,14 @@ const typeDefs = gql`
       messageText: String!
       messageAuthor: String!
       userId: ID!
-    ): Cypher
-    addCypherUser(userId: ID!, _id: ID!): Cypher
-  }
+      ): Cypher
+      addCypherUser(userId: ID!, _id: ID!): Cypher
+    }
+
+    type Subscription {
+      newCypherUser(userId: Int): User
+      newMessage(messageId: Int): Message
+      newCypher(cypherId: Int): Cypher  
+    }
 `;
 module.exports = typeDefs;
