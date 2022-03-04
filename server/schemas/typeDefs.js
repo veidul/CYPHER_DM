@@ -33,6 +33,10 @@ const typeDefs = gql`
     cyphers(_id: ID): Cypher
   }
 
+  type Subscription {
+    test: String
+  }
+
   type Mutation {
     login(email: String!, password: String!): Auth
     addCypher: Cypher

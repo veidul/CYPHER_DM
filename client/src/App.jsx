@@ -1,5 +1,5 @@
-import io from "socket.io-client";
 import React, { useEffect } from "react";
+import io from "socket.io-client";
 import "./assets/css/App.css";
 import "./assets/css/output.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -16,10 +16,10 @@ import Home from "./views/Home";
 import About from "./views/About";
 import Nav from "./components/Nav";
 
-const socketURL = io("https://localhost:3001");
+const socketURL = io("http://localhost:3001");
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/",
+  uri: "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -40,7 +40,7 @@ const client = new ApolloClient({
 function App() {
 
   useEffect(() => {
-    const socket = socketURL
+    const socket = socketURL.connect();
   }, [])
 
   return (

@@ -1,11 +1,11 @@
 // @ts-check
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import reactRefresh from "@vitejs/plugin-react-refresh";
 
 /**
  * @type { import('vite').UserConfig }
  */
 const config = {
-	plugins: [reactRefresh()]
+  plugins: [reactRefresh()],
 };
 
 export default config;
