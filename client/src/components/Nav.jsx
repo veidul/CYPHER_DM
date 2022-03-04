@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth"
 
 export default function Nav() {
+
+
 	return (
 		<>
 			<header className="text-gray-500 bg-gray-900 body-font">
