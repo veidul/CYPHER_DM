@@ -1,16 +1,18 @@
 import React from "react";
-import { useMutation } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { ADD_CYPHER } from "../utils/mutations";
+import { GET_ME } from "../utils/queries"
 
 export default function componentName() {
 
-	const[addCypher, {error, data}] = useMutation(ADD_CYPHER);
+	// const[addCypher, {error, data}] = useMutation(ADD_CYPHER);
+  const{loading, data} = useQuery(GET_ME);
 
-	const handleSubmit = async (token) => {
+	const onClick = async () => {
 	try {
-    const userId = token.user.userId
-		await addCypher({variables: {userId}
-    })
+    
+    console.log(data)
+    // await addCypher()
 	}catch(err){
 		console.log(err)
 	}
@@ -32,7 +34,7 @@ export default function componentName() {
     </div>
   </div>
 </div>
-      <button className="ml-auto mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+      <button onClick={onClick} className="ml-auto mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
        ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"> New Cypher </button>
       </div>
       <div className="flex flex-col h-3/4 bg-white border-2 ml-1 rounded-b border-black">
@@ -45,7 +47,7 @@ export default function componentName() {
       <input className="absolute h-full block w-full px-3 py-2 text-black placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-300 rounded
        shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed
 "/>
-<button onClick={handleSubmit} className="absolute right-0 bottom-0 ml-auto z-50 mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+<button className="absolute right-0 bottom-0 ml-auto z-50 mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
        ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"> SEND </button>
 </div>
     </div>

@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
-    userName: {
+    // need to add in userId
+    username: {
       type: String,
       require: true,
       unique: true,
