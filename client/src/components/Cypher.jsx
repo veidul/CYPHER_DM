@@ -37,7 +37,7 @@ export default function Cypher({ cypherData }) {
   return (
     <>
       <div
-        className="bg-slate-900 hover:bg-slate-800 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
+        className="bg-slate-900 hover:bg-slate-800 h-5/6 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
         onClick={loadCypher}
       >
         <div className="flex items-start">
