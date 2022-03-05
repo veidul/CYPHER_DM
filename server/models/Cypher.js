@@ -1,43 +1,16 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 const dateFormat = require("../utils/dateFormat");
 
+// fix this
 const cypherSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
-  users: [
-    {
-      userId: {
-        type: String,
-        unique: true,
-      },
-    },
-  ],
-  messages: [
-    {
-      messageText: {
-        type: String,
-        require: true,
-        minLength: 1,
-        maxLength: 500,
-      },
-      messageAuthor: {
-        type: String,
-        require: true,
-      },
-      userId: {
-        type: String,
-        require: true,
-      },
-      createdAt: {
-        type: Date,
-        default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
-      },
-    },
-  ],
+  users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
 });
 
 const Cypher = model("Cypher", cypherSchema);

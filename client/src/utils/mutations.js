@@ -5,7 +5,7 @@ export const LOGIN_USER = gql`
     login(email: $email, password: $password) {
       token
       user {
-        userId
+        _id
         username
       }
     }
@@ -17,7 +17,7 @@ export const ADD_USER = gql`
     addUser(username: $username, email: $email, password: $password) {
       token
       user {
-        userId
+        _id
         username
       }
     }
@@ -25,42 +25,51 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_MESSAGE = gql`
-  mutation addMessage(
-    $_id: ID!
-    $messageText: String!
-    $messageAuthor: String!
-    $userId: ID!
-  ) {
-    addMessage(
-      _id: $_id
-      messageText: $messageText
-      messageAuthor: $messageAuthor
-    ) {
+  mutation addMessage($_id: ID!, $messageText: String!, $input: UserInput!) {
+    addMessage(input: $input, messageText: $messageText) {
       _id
       message {
         messageText
-        messageAuthor
-        userId
+        createdAt
+        user {
+          _id
+          username
+          email
+          password
+        }
       }
     }
   }
 `;
 // might need to change id references
 export const ADD_CYPHER_USER = gql`
-  mutation addCypherUser($userId: ID!, $_id: ID!) {
-    addCypherUser(userId: $userId, _id: $_id)
-    _id
-    user {
-      userId
+  mutation addCypherUser($input: UserInput!) {
+    addCypherUser(input: $input) {
+      _id
+      createdAt
+      users
+      messages
     }
   }
 `;
 
 export const ADD_CYPHER = gql`
-  mutation addCypher($userId: ID!) {
-    addCypher(userId: $userId)
-    user {
-      userId
+  mutation addCypher($input: UserInput!) {
+    addCypher(input: $input) {
+      _id
+      createdAt
+      messages {
+        createdAt
+        messageText
+        user {
+          username
+        }
+      }
+      users {
+        _id
+        username
+        email
+      }
     }
   }
 `;
