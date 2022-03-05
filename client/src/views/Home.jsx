@@ -1,40 +1,92 @@
 import React from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { ADD_CYPHER } from "../utils/mutations";
+import { GET_ME, GET_CYPHERS } from "../utils/queries";
+import CypherMenu from "../components/CypherMenu";
 
 export default function componentName() {
+  const { loading, data } = useQuery(GET_ME);
+  const { loading: cypherLoading, data: cypherData } = useQuery(GET_CYPHERS);
+  const [addCypher, { error }] = useMutation(ADD_CYPHER, {
+    update(cache, { data: { addCypher } }) {
+      console.log(cypherData);
+      const { cyphers } = cache.readQuery({ query: GET_CYPHERS });
+      cache.writeQuery({
+        query: GET_CYPHERS,
+        data: { cyphers: [...cyphers, addCypher] },
+      });
+    },
+  });
+  const { __typename, ...userData } = data?.me || {};
+  const onClick = async () => {
+    try {
+      const cypherCreated = await addCypher({ variables: { input: userData } });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
-      <section className="text-gray-700 body-font">
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
-          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <h1 className="title-font sm:text-4xl text-sm mb-4 font-medium text-blue-900">
-              Before they sold out
-              <br className="hidden lg:inline-block" />
-              readymade gluten
+      <div className="flex flex-row">
+        <div className="float-left flex-col relative flex h-screen w-3/12 bg-white">
+          <div className="flex flex-col h-1/6 bg-white border-x-2 border-t-2 mt-1 ml-1 rounded-t border-black">
+            <h1 className=" text-center border-b-2 h-2/6 border-black text-black">
+              Cyphers
             </h1>
-            <p className="mb-8 leading-relaxed">
-              Copper mug try-hard pitchfork pour-over freegan heirloom neutra
-              air plant cold-pressed tacos poke beard tote bag. Heirloom echo
-              park mlkshk tote bag selvage hot chicken authentic tumeric
-              truffaut hexagon try-hard chambray.
-            </p>
             <div className="flex justify-center">
-              <button className="inline-flex text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg">
-                Button
-              </button>
-              <button className="ml-4 inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 rounded text-lg">
-                Button
-              </button>
+              <div className="mb-3 xl:w-96">
+                <div className="input-group relative flex items-stretch w-full my-4">
+                  <input
+                    type="search"
+                    className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white
+       bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    placeholder="Search"
+                    aria-label="Search"
+                    aria-describedby="button-addon3"
+                  />
+                  <button
+                    className="btn inline-block px-6 py-2 bg-purple-600 text-white font-medium text-xs leading-tight uppercase hover:bg-purple-700 focus:ring-offset-purple-200
+       focus:outline-none focus:ring-2 transition duration-200 ease-in-out focus:ring-offset-2 rounded-lg"
+                    type="button"
+                    id="button-addon3"
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
             </div>
+            <button
+              onClick={onClick}
+              className="ml-auto mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+       ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+            >
+              {" "}
+              New Cypher{" "}
+            </button>
           </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-            <img
-              className="object-cover object-center rounded"
-              alt="hero"
-              src="https://dummyimage.com/720x600"
+          <CypherMenu />
+        </div>
+        <div className="float-right flex-colrelative h-screen w-9/12 bg-red overflow-auto">
+          <div className="bg-red h-3/4 border-2 rounded-t border-black mt-1 m-l-1">
+            area for messages to be appended
+          </div>
+          <div className="bg-blue h-1/6 border-x-2 rounded-b border-b-2 border-black relative">
+            <input
+              className="absolute h-full block w-full px-3 py-2 text-black placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-300 rounded
+       shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed
+"
             />
+            <button
+              className="absolute right-0 bottom-0 ml-auto z-50 mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+       ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+            >
+              {" "}
+              SEND{" "}
+            </button>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 }

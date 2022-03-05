@@ -16,11 +16,14 @@ const LoginForm = () => {
     }
 
     const handleFormSubmit = async (event) => {
+        event.preventDefault();
         // add form validation here
         try {
             const {data} = await login({
                 variables: {...userFormData},
             })
+            console.log(data)
+            // debugger;
             Auth.login(data.login.token);
         } catch (err) {
             console.log(err);
@@ -34,12 +37,12 @@ const LoginForm = () => {
 
 return (
     <>
-    <div className="flex flex-col w-full max-w-md mx-auto px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
+    <div className="flex flex-col w-full h-full max-w-md mx-auto px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
     <div className="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
         Login To Your Account
     </div>
     <div className="mt-8">
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form onSubmit={(e) => handleSubmit(handleFormSubmit(e))}>
             <div className="flex flex-col mb-2">
                 <div className="flex relative ">
                     <span className="rounded-l-md inline-flex  items-center px-3 border-t bg-white border-l border-b  border-gray-300 text-gray-500 shadow-sm text-sm">

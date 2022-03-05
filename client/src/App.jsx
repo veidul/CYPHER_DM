@@ -15,6 +15,7 @@ import LoginForm from "./components/Login";
 import Home from "./views/Home";
 import About from "./views/About";
 import Nav from "./components/Nav";
+import Cypher from "./components/Cypher";
 
 const socketURL = io("http://localhost:3001");
 
@@ -26,7 +27,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: localStorage.getItem("token") || "",
+      authorization: localStorage.getItem("id_token") || "",
     },
   };
 });

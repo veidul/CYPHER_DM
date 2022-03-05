@@ -1,51 +1,36 @@
-const { AuthenticatioError } = require("apollo-server-express");
-const { User, Cypher } = require("../models");
+const { AuthenticationError } = require("apollo-server-express");
+const { User, Cypher, Message } = require("../models");
 const { signToken } = require("../utils/auth");
-const { PubSub } = require('graphql-subscriptions');
-const pubsub = new PubSub();
-const NEW_CYPHER_USER = "NEW_USER";
-const NEW_MESSAGE = "NEW_MESSAGE";
-const NEW_CYPHER = "NEW_CYPHER"
-
 
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user_id });
+        const userData = await User.findOne({ _id: context.user._id });
         return userData;
       }
-      throw new AuthenticatioError("You need to be logged in!");
+      throw new AuthenticationError("You need to be logged in!");
     },
-    cyphers: async (parent, { _id }) => {
+    cyphers: async () => {
       // may want to flip to a possitive number depending on how it is returned
-      const params = _id ? { _id } : {};
-      return Matchup.find(params);
+      // searching for user object may not work
+      const data = await Cypher.find({}).populate("users").populate("messages");
+      console.log(data);
+      return data;
     },
-  },
-  Subscription: {
-    newCypherUser: {
-      subscribe: () => pubsub.asyncIterator([NEW_CYPHER_USER]),
-    },
-    newMessage: {
-      subscribe: () => pubsub.asyncIterator([NEW_MESSAGE])
-    },
-    newCypher: {
-      subscribe: () => pubsub.asyncIterator([NEW_CYPHER])
-    }
   },
   Mutation: {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
-        throw new AuthenticatioError(
+        throw new AuthenticationError(
           "No user found with matching email address!"
         );
       }
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticatioError("Incorrect credentials");
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const token = signToken(user);
@@ -57,33 +42,36 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addCypher: async (parent, { userId }) => {
-      await Cypher.create({ userId });
-      return pubsub.publish(NEW_CYPHER, { userId })
+    addCypher: async (parent, input, context) => {
+      const user = await User.findOne({ _id: context.user._id });
+
+      //if there's a user, create cypher, else return
+      const cypher = await Cypher.create({ users: [user._id], messages: [] });
+      return await cypher.populate("users");
     },
-    addMessage: async (parent, { _id, messageText, messageAuthor, userId }) => {
-      await Cypher.findOneAndUpdate(
+    addMessage: async (parent, { _id, messageText, context }) => {
+      const user = await User.findOne({ _id: context.user._id });
+      return Cypher.findOneAndUpdate(
         { _id },
         {
           // we will want to find userName from the userId.
-          $addToSet: { messages: { messageText, messageAuthor, userId } },
+          $addToSet: { messages: { messageText, user } },
         },
         {
           new: true,
           runValidators: true,
         }
       );
-      return pubsub.publish(NEW_MESSAGE, { _id, messageText, messageAuthor, userId })
     },
-    addCypherUser: async (parent, { userId, _id }) => {
-      await Cypher.findOneAndUpdate(
+    addCypherUser: async (parent, _id, context) => {
+      const user = await User.findOne({ _id: context.user._id });
+      return Cypher.findOneAndUpdate(
         { _id },
         {
           // we might want to update this to include username and userId
-          $addToSet: { User: { userId } },
+          $addToSet: { users: { user } },
         }
       );
-      return pubsub.publish(NEW_CYPHER_USER, { userId, _id })
     },
   },
 };
