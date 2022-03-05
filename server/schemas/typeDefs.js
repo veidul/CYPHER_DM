@@ -52,7 +52,7 @@ const typeDefs = gql`
   type Subscription {
       newCypherUser(userId: Int): User
       newMessage(messageText: String, cypherId: ID): Cypher
-      newCypher(cypherId: Int): Cypher  
+      newCypher: Cypher  
   }
 `;
 

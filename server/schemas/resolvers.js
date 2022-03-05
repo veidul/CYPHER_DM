@@ -2,11 +2,22 @@ const { AuthenticationError } = require("apollo-server-express");
 const { PubSub } = require("graphql-subscriptions");
 const { User, Cypher, Message } = require("../models");
 const { signToken } = require("../utils/auth");
+const pubsub = new PubSub();
+const NEW_CYPHER_USER = "NEW_USER";
+const NEW_MESSAGE = "NEW_MESSAGE";
+const NEW_CYPHER = "NEW_CYPHER"
+
 
 const resolvers = {
   Subscription: {
     newCypherUser: {
-      subscribe: () => PubSub.asyncIterator([])
+      subscribe: () => pubsub.asyncIterator([NEW_CYPHER_USER]),
+    },
+    newMessage: {
+      subscribe: () => pubsub.asyncIterator([NEW_MESSAGE])
+    },
+    newCypher: {
+      subscribe: () => pubsub.asyncIterator([NEW_CYPHER])
     }
   },
   Query: {
@@ -53,7 +64,9 @@ const resolvers = {
 
       //if there's a user, create cypher, else return
       const cypher = await Cypher.create({ users: [user._id], messages: [] });
-      return await cypher.populate("users");
+      const data = await cypher.populate("users");
+      pubsub.publish(NEW_CYPHER, data)
+      return data
     },
     addMessage: async (parent, { _id, messageText, context }) => {
       const user = await User.findOne({ _id: context.user._id });

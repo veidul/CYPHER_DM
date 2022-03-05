@@ -41,7 +41,7 @@ async function startApolloServer(typeDefs, resolvers) {
     }],
     context: authMiddleware,
     subscriptions: {
-      onConnect: (sub) => {
+      onconnect: (sub) => {
         console.log(sub)
         console.log("WS connected")
       }
