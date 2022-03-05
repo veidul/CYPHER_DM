@@ -1,45 +1,9 @@
 import React from "react";
-import Auth from "../utils/auth";
 
-/*
-cypher contains
-{
-    createdAt: ,
-    users: [
-        {
-            userId: ,
-            //need userName: ,
-        }
-    ],
-    messages: [
-        {
-            messageText: ,
-            messageAuthor: ,
-            userId: ,
-            createdAt: ,
-        }
-    ],   
-}
-
-*/
-export default function Cypher({ cypherData }) {
-  //onClick handler to load dialogue UI
-  const loadCypher = () => {
-    //code to to fetch this cyphers data
-
-    //code to trigger dialogue ui render with fetch result
-
-    //code to publish socket.io event for connect
-
-    console.log("hit on line 36 inside load Cypher!!");
-  };
-
+export default function Message({ cypherData }) {
   return (
     <>
-      <div
-        className="bg-slate-900 hover:bg-slate-800 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
-        onClick={loadCypher}
-      >
+      <div className="bg-slate-900 hover:bg-slate-800 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
         <div className="flex items-start">
           <div className=" flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
             <svg

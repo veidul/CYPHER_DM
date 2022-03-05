@@ -49,9 +49,9 @@ const typeDefs = gql`
   }
 
   type Subscription {
-    newCypherUser(userId: Int): User
-    newMessage(messageId: Int): Message
-    newCypher(cypherId: Int): Cypher
+    newCypherUser(userId: ID): User
+    newMessage(messageId: ID): Message
+    newCypher(cypherId: ID): Cypher
   }
 `;
 //naji need to explain to me subscription i think references are wrong and output is incorrect as well...
