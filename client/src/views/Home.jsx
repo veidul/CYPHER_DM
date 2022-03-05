@@ -2,6 +2,7 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/client"
 import { ADD_CYPHER } from "../utils/mutations";
 import { GET_ME } from "../utils/queries"
+import CypherMenu from "../components/CypherMenu";
 
 export default function componentName() {
 
@@ -37,9 +38,7 @@ export default function componentName() {
       <button onClick={onClick} className="ml-auto mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
        ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"> New Cypher </button>
       </div>
-      <div className="flex flex-col h-3/4 bg-white border-2 ml-1 rounded-b border-black">
-
-      </div>
+      <CypherMenu/>
     </div>
     <div className="float-right flex-colrelative h-screen w-9/12 bg-red overflow-auto">
     <div className="bg-red h-3/4 border-2 rounded-t border-black mt-1 m-l-1">area for messages to be appended</div>
