@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import io from "socket.io-client";
 import "./assets/css/App.css";
 import "./assets/css/output.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, split } from "@apollo/client";
+import { ApolloClient, ApolloProvider, InMemoryCache, split, HttpLink } from "@apollo/client";
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
@@ -15,14 +14,13 @@ import About from "./views/About";
 import Nav from "./components/Nav";
 import Cypher from "./components/Cypher";
 
-const socketURL = io("http://localhost:3001");
 
-const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+const httpLink = new HttpLink({
+  uri: 'http://localhost:3001/graphql'
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url:  process.env.NODE_ENV === "production" ? 'ws://something.herokuapp.com' : 'ws://localhost:3001/graphql'
+  url:  process.env.NODE_ENV === "production" ? 'ws://something.herokuapp.com' : 'ws://localhost:3001/subscriptions'
 }));
 
 const splitLink = split(
@@ -47,15 +45,12 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(splitLink),
+  link: splitLink,
+  // link: httpLink,
   cache: new InMemoryCache(),
 });
 
 function App() {
-  useEffect(() => {
-    const socket = socketURL.connect();
-  }, [])
-
   return (
     <ApolloProvider client={client}>
       <Router>

@@ -20,7 +20,7 @@ const typeDefs = gql`
     createdAt: String
     messageText: String
     messageAuthor: String
-    userId(_id: ID): User
+    user: User
   }
 
   type Auth {
