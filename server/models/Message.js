@@ -15,6 +15,7 @@ const messageSchema = new Schema({
     minLength: 1,
     maxLength: 500,
   },
+  cypherId: { type: Schema.Types.ObjectId, ref: "Cypher" }
 });
 const Message = model("Message", messageSchema);
 module.exports = Message;

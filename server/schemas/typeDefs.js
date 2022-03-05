@@ -19,6 +19,7 @@ const typeDefs = gql`
     _id: ID
     createdAt: String
     messageText: String
+    messageAuthor: String
     user: User
   }
 
@@ -49,10 +50,10 @@ const typeDefs = gql`
   }
 
   type Subscription {
-    newCypherUser(userId: ID): User
-    newMessage(messageId: ID): Message
-    newCypher(cypherId: ID): Cypher
+      newCypherUser(userId: Int): User
+      newMessage(messageText: String, cypherId: ID): Cypher
+      newCypher: Cypher  
   }
 `;
-//naji need to explain to me subscription i think references are wrong and output is incorrect as well...
+
 module.exports = typeDefs;
