@@ -2,6 +2,7 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_CYPHER } from "../utils/mutations";
 import { GET_ME, GET_CYPHERS } from "../utils/queries";
+import CypherMenu from "../components/CypherMenu";
 
 export default function componentName() {
   const { loading, data } = useQuery(GET_ME);
@@ -64,11 +65,7 @@ export default function componentName() {
               New Cypher{" "}
             </button>
           </div>
-          <div className="flex flex-col h-3/4 bg-white border-2 ml-1 rounded-b border-black">
-            {!cypherLoading &&
-              cypherData?.cyphers &&
-              cypherData.cyphers.map((cypher) => <button>{cypher._id}</button>)}
-          </div>
+          <CypherMenu />
         </div>
         <div className="float-right flex-colrelative h-screen w-9/12 bg-red overflow-auto">
           <div className="bg-red h-3/4 border-2 rounded-t border-black mt-1 m-l-1">
