@@ -3,19 +3,29 @@ import { gql } from "@apollo/client";
 export const GET_ME = gql`
   query me {
     me {
-      userId
+      _id
       username
       email
     }
   }
 `;
 export const GET_CYPHERS = gql`
-  query cyphers($_id: String) {
-    cyphers(_id: $_id) {
+  query cyphers {
+    cyphers {
       _id
       createdAt
-      messages
-      Users
+      messages {
+        createdAt
+        messageText
+        user {
+          username
+        }
+      }
+      users {
+        _id
+        username
+        email
+      }
     }
   }
 `;
