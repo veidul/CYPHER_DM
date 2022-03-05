@@ -21,6 +21,7 @@ const typeDefs = gql`
     messageText: String
     messageAuthor: String
     userId: ID
+    cypherId: ID!
   }
 
   type Auth {
@@ -49,8 +50,9 @@ const typeDefs = gql`
 
     type Subscription {
       newCypherUser(userId: Int): User
-      newMessage(messageId: Int): Message
+      newMessage(messageText: String, cypherId: ID): Message
       newCypher(cypherId: Int): Cypher  
     }
 `;
+
 module.exports = typeDefs;

@@ -31,7 +31,6 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
@@ -48,7 +47,7 @@ function App() {
       <Router>
         <>
           <Nav />
-          <div className="dark:bg-gray-900 dark:text-gray-300">
+          <div className="dark:bg-gray-900 dark:text-gray-300">/
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
