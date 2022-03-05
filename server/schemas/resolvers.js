@@ -1,8 +1,14 @@
 const { AuthenticationError } = require("apollo-server-express");
+const { PubSub } = require("graphql-subscriptions");
 const { User, Cypher, Message } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
+  Subscription: {
+    newCypherUser: {
+      subscribe: () => PubSub.asyncIterator([])
+    }
+  },
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {

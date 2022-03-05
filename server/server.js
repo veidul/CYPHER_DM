@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const { ApolloServer } = require("apollo-server-express");
 const db = require("./config/connection");
-// const { Server } = require("socket.io")
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
@@ -42,7 +41,7 @@ async function startApolloServer(typeDefs, resolvers) {
     }],
     context: authMiddleware,
     subscriptions: {
-      onconnect: (sub) => {
+      onConnect: (sub) => {
         console.log(sub)
         console.log("WS connected")
       }
@@ -51,25 +50,8 @@ async function startApolloServer(typeDefs, resolvers) {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-
-  // const io = require("socket.io")(server, {
-  //   cors: {
-  //     origin: `http://localhost:3000`,
-  //     method: ["GET", "POST"],
-  //   }
-  // }
-  // )
-  // io.listen(3001);
   await server.start();
   server.applyMiddleware({ app });
-
-  // io.on("connection", (socket) => {
-  //   console.log(`User Connected: ${socket.id}`)
-
-  //   socket.on("disconnect", () => {
-  //     console.log("User Disconnected", socket.id)
-  //   })
-  // });
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client")));
@@ -82,9 +64,6 @@ async function startApolloServer(typeDefs, resolvers) {
     console.log(`GQL server running on http://localhost:${PORT}/graphql`)
     console.log(`WS server running on ws://localhost:${PORT}`)
   });
-  // console.log(
-  //   `Graphql is ready at http://localhost:${PORT}${server.graphqlPath}`
-  // );
-  // console.log(`Server ready at http://localhost:${PORT}`);
+
 }
 startApolloServer(typeDefs, resolvers);

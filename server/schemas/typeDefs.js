@@ -20,8 +20,7 @@ const typeDefs = gql`
     createdAt: String
     messageText: String
     messageAuthor: String
-    userId: ID
-    cypherId: ID!
+    userId(_id: ID): User
   }
 
   type Auth {
@@ -50,11 +49,11 @@ const typeDefs = gql`
     addCypherUser(_id: ID!, input: UserInput!): Cypher
   }
 
-    type Subscription {
+  type Subscription {
       newCypherUser(userId: Int): User
-      newMessage(messageText: String, cypherId: ID): Message
+      newMessage(messageText: String, cypherId: ID): Cypher
       newCypher(cypherId: Int): Cypher  
-    }
+  }
 `;
 
 module.exports = typeDefs;
