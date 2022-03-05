@@ -56,13 +56,15 @@ function App() {
       <Router>
         <>
           <Nav />
-          <div className="dark:bg-gray-900 dark:text-gray-300">/
+          <div className="dark:bg-gray-900 dark:text-gray-300 h-screen">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/register" element={<Register />} />
-              <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
+              <Route
+                render={() => <h1 className="display-2">Wrong page!</h1>}
+              />
             </Routes>
           </div>
         </>
