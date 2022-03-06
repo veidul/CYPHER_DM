@@ -20,7 +20,7 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url:  process.env.NODE_ENV === "production" ? 'ws://something.herokuapp.com' : 'ws://localhost:3001/subscriptions'
+  url:  process.env.NODE_ENV === "production" ? 'ws://something.herokuapp.com' : 'ws://localhost:3001/graphql'
 }));
 
 const splitLink = split(
@@ -45,7 +45,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: splitLink,
+  link: authLink.concat(splitLink),
   // link: httpLink,
   cache: new InMemoryCache(),
 });

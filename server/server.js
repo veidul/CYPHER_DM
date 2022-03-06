@@ -1,25 +1,26 @@
 const express = require("express");
 const path = require("path");
 const { ApolloServer } = require("apollo-server-express");
-const db = require("./config/connection");
+const {makeExecutableSchema} = require("@graphql-tools/schema")
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
 const { createServer } = require("http");
 const PORT = process.env.PORT || 3001;
-const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
+const db = require("./config/connection")
 
 const app = express();
 
 async function startApolloServer(typeDefs, resolvers) {
+  const schema = makeExecutableSchema({typeDefs, resolvers})
   const httpServer = createServer(app);
   const wsServer = new WebSocketServer({
     server: httpServer,
     path: '/graphql',
   });
-  const serverCleanup = useServer({}, wsServer);
+  const serverCleanup = useServer({schema}, wsServer);
 
   const server = new ApolloServer({
     // schema,
@@ -27,8 +28,7 @@ async function startApolloServer(typeDefs, resolvers) {
       origin: "*",
       credentials: true,
     },
-    typeDefs,
-    resolvers,
+    schema,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
     {
       async serverWillStart() {
@@ -40,18 +40,18 @@ async function startApolloServer(typeDefs, resolvers) {
       }
     }],
     context: authMiddleware,
-    subscriptions: {
-      onconnect: (sub) => {
-        console.log(sub)
-        console.log("WS connected")
-      }
-    }
+    // subscriptions: {
+    //   onconnect: (sub) => {
+    //     console.log(sub)
+    //     console.log("WS connected")
+    //   }
+    // }
   });
-  app.use(express.urlencoded({ extended: false }));
-  app.use(express.json());
-
   await server.start();
+  // app.use(express.urlencoded({ extended: false }));
+  // app.use(express.json());
   server.applyMiddleware({ app });
+
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client")));

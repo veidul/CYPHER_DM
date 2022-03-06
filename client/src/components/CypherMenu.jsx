@@ -30,7 +30,7 @@ export default function CypherMenu({ cypherLoading, cypherData }) {
         {/*needs code to map cyperData as cypher component*/}
         {!cypherLoading &&
           cypherData?.cyphers &&
-          cypherData.cyphers.map((cypher) => <Cypher cypherData={cypher} />)}
+          cypherData.cyphers.map((cypher) => <Cypher key={Math.random()} cypherData={cypher} />)}
         {/* <Cypher
           usersTitle="DM_Boys"
           lastMessageDate="3/2"
