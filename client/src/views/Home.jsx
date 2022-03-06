@@ -1,10 +1,10 @@
-import React from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import React, {useEffect} from "react";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_ME, GET_CYPHERS } from "../utils/queries";
 import { ADD_CYPHER } from "../utils/mutations";
 import CypherMenu from "../components/CypherMenu";
 import ChatWindow from "../components/ChatWindow";
-
+import { CYPHER_ADDED } from "../utils/subscription";
 export default function componentName() {
   const { loading, data } = useQuery(GET_ME);
   const { loading: cypherLoading, data: cypherData } = useQuery(GET_CYPHERS);
@@ -18,6 +18,7 @@ export default function componentName() {
       });
     },
   });
+  const { loading: cypherAddedLoading, data:newCypherData } = useSubscription(CYPHER_ADDED)
   const { __typename, ...userData } = data?.me || {};
   const onClick = async () => {
     try {
@@ -27,8 +28,11 @@ export default function componentName() {
     }
   };
 
+  useEffect(()=> console.log("new cypher sub", newCypherData), [newCypherData])
+
   return (
     <>
+    {!cypherLoading && newCypherData && <h1>LAST CYPHER CREATED --- {newCypherData.newCypher?._id || newCypherData.onCypherAdded?._id}</h1>}
       <div className="flex flex-row h-5/6">
         <div className="float-left flex-col relative flex h-screen w-3/12 bg-white">
           <div className="flex flex-col h-1/6 bg-white border-x-2 border-t-2 mt-1 ml-1 rounded-t border-black">

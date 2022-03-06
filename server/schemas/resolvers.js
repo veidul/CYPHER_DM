@@ -55,9 +55,15 @@ const resolvers = {
       return { token, user };
     },
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
-      return { token, user };
+      console.log("payload received", username);
+      try{
+
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+      }catch(e){
+        console.log(e)
+      }
     },
     addCypher: async (parent, input, context) => {
       const user = await User.findOne({ _id: context.user._id });
@@ -65,7 +71,7 @@ const resolvers = {
       //if there's a user, create cypher, else return
       const cypher = await Cypher.create({ users: [user._id], messages: [] });
       const data = await cypher.populate("users");
-      pubsub.publish(NEW_CYPHER, data)
+      await pubsub.publish(NEW_CYPHER, data);
       return data
     },
     addMessage: async (parent, { _id, messageText, context }) => {
