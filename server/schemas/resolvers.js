@@ -62,13 +62,12 @@ const resolvers = {
     },
     addUser: async (parent, { username, email, password }) => {
       console.log("payload received", username);
-      try{
-
+      try {
         const user = await User.create({ username, email, password });
         const token = signToken(user);
         return { token, user };
-      }catch(e){
-        console.log(e)
+      } catch (e) {
+        console.log(e);
       }
     },
     addCypher: async (parent, input, context) => {
@@ -77,13 +76,8 @@ const resolvers = {
       //if there's a user, create cypher, else return
       const cypher = await Cypher.create({ users: [user._id], messages: [] });
       const data = await cypher.populate("users");
-<<<<<<< HEAD
       pubsub.publish(NEW_CYPHER, data);
       return data;
-=======
-      await pubsub.publish(NEW_CYPHER, data);
-      return data
->>>>>>> cb1a80d8392f499ffd1b92bdaa7dd14c282352b4
     },
     addMessage: async (parent, { _id, messageText }, context) => {
       const user = await User.findOne({ _id: context.user._id });

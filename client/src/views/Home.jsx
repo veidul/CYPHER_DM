@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_ME, GET_CYPHERS } from "../utils/queries";
 import { ADD_CYPHER } from "../utils/mutations";
@@ -18,7 +18,8 @@ export default function componentName() {
       });
     },
   });
-  const { loading: cypherAddedLoading, data:newCypherData } = useSubscription(CYPHER_ADDED)
+  const { loading: cypherAddedLoading, data: newCypherData } =
+    useSubscription(CYPHER_ADDED);
   const { __typename, ...userData } = data?.me || {};
   const onClick = async () => {
     console.log(userData);
@@ -29,16 +30,14 @@ export default function componentName() {
     }
   };
 
-  useEffect(()=> console.log("new cypher sub", newCypherData), [newCypherData])
+  useEffect(
+    () => console.log("new cypher sub", newCypherData),
+    [newCypherData]
+  );
 
   return (
     <>
-<<<<<<< HEAD
       <div className="flex flex-row">
-=======
-    {!cypherLoading && newCypherData && <h1>LAST CYPHER CREATED --- {newCypherData.newCypher?._id || newCypherData.onCypherAdded?._id}</h1>}
-      <div className="flex flex-row h-5/6">
->>>>>>> cb1a80d8392f499ffd1b92bdaa7dd14c282352b4
         <div className="float-left flex-col relative flex h-screen w-3/12 bg-white">
           <div className="flex flex-col h-1/6 bg-white border-x-2 border-t-2 mt-1 ml-1 rounded-t border-black">
             <h1 className=" text-center border-b-2 h-2/6 border-black text-black">
