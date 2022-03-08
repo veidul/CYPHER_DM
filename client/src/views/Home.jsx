@@ -74,6 +74,7 @@ export default function componentName() {
             </button>
           </div>
           <CypherMenu
+            userData={userData}
             cypherLoading={cypherLoading}
             cypherData={cypherData}
             chatWindowData={chatWindowData}
@@ -81,6 +82,7 @@ export default function componentName() {
           />
         </div>
         <ChatWindow
+          userData={userData}
           cypherLoading={cypherLoading}
           cypherData={cypherData}
           chatWindowData={chatWindowData}

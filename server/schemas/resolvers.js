@@ -79,11 +79,17 @@ const resolvers = {
       pubsub.publish(NEW_CYPHER, data);
       return data;
     },
-    addMessage: async (parent, { _id, messageText }, context) => {
+    addMessage: async (parent, { cypherId, messageText }, context) => {
       const user = await User.findOne({ _id: context.user._id });
-      const messageData = await Message.create({ user: user._id, messageText });
+      console.log(user, "user console log");
+      const username = user.username;
+      const messageData = await Message.create({
+        username,
+        messageText,
+        cypherId,
+      });
       const cypher = await Cypher.findOneAndUpdate(
-        { _id },
+        { _id: cypherId },
         {
           // we will want to find userName from the userId.
           $addToSet: { messages: [messageData] },

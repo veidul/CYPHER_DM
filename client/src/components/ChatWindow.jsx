@@ -10,12 +10,14 @@ export default function ChatWindow({
   cypherData,
   chatWindowData,
   setChatWindowData,
+  userData,
 }) {
+  //here we need to add in the use mutation and get it working. figure out what data needs to be passed to the function.
   const [messageText, setMessageText] = useState("");
   const [addMessage, { error }] = useMutation(ADD_MESSAGE);
   // const onClick = async () => {
   //   try {
-  //     const cypherCreated = await addCypher({ variables: { input: userData } });
+  //     const cypherCreated = await addCypher({ variables: { input: userData, messageText, _id: chatWindowData._id }});
   //   } catch (err) {
   //     console.log(err);
   //   }
@@ -25,8 +27,13 @@ export default function ChatWindow({
   const submitHandler = async () => {
     console.log(chatWindowData);
     const text = document.getElementById("inputText").value;
-    setMessageText(text);
-    // addMessage({variables: {_id: chatWindowData._id, messageText}})
+    // setMessageText(text);
+    addMessage({
+      variables: {
+        messageText: text,
+        cypherId: chatWindowData._id,
+      },
+    });
   };
   return (
     <>

@@ -25,18 +25,19 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_MESSAGE = gql`
-  mutation addMessage($_id: ID!, $messageText: String!, $input: UserInput!) {
-    addMessage(input: $input, messageText: $messageText) {
+  mutation addMessage($cypherId: String, $messageText: String!) {
+    addMessage(cypherId: $cypherId, messageText: $messageText) {
       _id
-      message {
+      messages {
         messageText
         createdAt
-        user {
-          _id
-          username
-          email
-          password
-        }
+        username
+        cypherId
+      }
+      users {
+        _id
+        username
+        email
       }
     }
   }
@@ -61,9 +62,8 @@ export const ADD_CYPHER = gql`
       messages {
         createdAt
         messageText
-        user {
-          username
-        }
+        username
+        cypherId
       }
       users {
         _id

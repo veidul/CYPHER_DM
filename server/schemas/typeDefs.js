@@ -18,9 +18,9 @@ const typeDefs = gql`
   type Message {
     _id: ID
     createdAt: String
-    messageText: String
-    user: User
-    cypher: Cypher
+    messageText: String!
+    username: String
+    cypherId: String
   }
 
   type Auth {
@@ -45,7 +45,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addCypher(input: UserInput!): Cypher
     addUser(username: String!, email: String!, password: String!): Auth
-    addMessage(_id: ID!, messageText: String!): Cypher
+    addMessage(cypherId: String, messageText: String): Cypher
     addCypherUser(_id: ID!, input: UserInput!): Cypher
   }
 
