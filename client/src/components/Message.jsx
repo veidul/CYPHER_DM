@@ -6,7 +6,6 @@ export default function Message({
   setChatWindowData,
   chatWindowData,
 }) {
-  console.log(message);
   return (
     <>
       <div className="bg-slate-900 hover:bg-slate-800 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -34,15 +33,15 @@ export default function Message({
                 {}
               </h3>
               <p className="text-sm font-bold text-gray-500">
-                {/* {message ? message : "no message"} */}
+                {message ? message.username : "no message"}
               </p>
             </div>
             <div className="flex justify-start mt-2">
               <p className="text-sm text-gray-500">
-                {/* {lastMessageText ? lastMessageText : ""} */}
+                {message ? message.createdAt : "no message"}
               </p>
               <p className="text-sm text-gray-500">
-                {/* {cypherData ? cypherData._id : "testing"} */}
+                {message ? message.messageText : "no message"}
               </p>
             </div>
           </div>
