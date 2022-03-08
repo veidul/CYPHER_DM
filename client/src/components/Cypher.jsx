@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { GET_CYPHER } from "../utils/queries";
@@ -24,19 +24,30 @@ cypher contains
 }
 
 */
-export default function Cypher({ cypherData }) {
-  console.log(cypherData, "cypherData");
-  //onClick handler to load dialogue UI
-  const loadCypher = (cypherData) => {
-    const cypherId = cypherData._id;
+export default function Cypher({
+  cypherData,
+  setChatWindowData,
+  chatWindowData,
+}) {
+  // console.log(cypherData, "data");
+  // const { __typename, ...consoleData } = cypherData || {};
+  // console.log(cypherData._id, "id");
+  const loadCypher = () => {
+    // console.log(cypherData._id, "consoleData log");
+    try {
+      setChatWindowData(cypherData);
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(cypherData);
+    // console.log(chatWindowData);
     //code to to fetch this cyphers data
 
     //code to trigger dialogue ui render with fetch result
 
     //code to publish socket.io event for connect
-
-    console.log("hit on line 36 inside load Cypher!!");
   };
+  //onClick handler to load dialogue UI
 
   return (
     <>

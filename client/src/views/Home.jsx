@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_ME, GET_CYPHERS } from "../utils/queries";
 import { ADD_CYPHER } from "../utils/mutations";
@@ -6,11 +6,11 @@ import CypherMenu from "../components/CypherMenu";
 import ChatWindow from "../components/ChatWindow";
 import { CYPHER_ADDED } from "../utils/subscription";
 export default function componentName() {
+  const [chatWindowData, setChatWindowData] = useState([]);
   const { loading, data } = useQuery(GET_ME);
   const { loading: cypherLoading, data: cypherData } = useQuery(GET_CYPHERS);
   const [addCypher, { error }] = useMutation(ADD_CYPHER, {
     update(cache, { data: { addCypher } }) {
-      console.log(cypherData);
       const { cyphers } = cache.readQuery({ query: GET_CYPHERS });
       cache.writeQuery({
         query: GET_CYPHERS,
@@ -22,7 +22,6 @@ export default function componentName() {
     useSubscription(CYPHER_ADDED);
   const { __typename, ...userData } = data?.me || {};
   const onClick = async () => {
-    console.log(userData);
     try {
       const cypherCreated = await addCypher({ variables: { input: userData } });
     } catch (err) {
@@ -74,9 +73,19 @@ export default function componentName() {
               New Cypher{" "}
             </button>
           </div>
-          <CypherMenu cypherLoading={cypherLoading} cypherData={cypherData} />
+          <CypherMenu
+            cypherLoading={cypherLoading}
+            cypherData={cypherData}
+            chatWindowData={chatWindowData}
+            setChatWindowData={setChatWindowData}
+          />
         </div>
-        <ChatWindow cypherLoading={cypherLoading} cypherData={cypherData} />
+        <ChatWindow
+          cypherLoading={cypherLoading}
+          cypherData={cypherData}
+          chatWindowData={chatWindowData}
+          setChatWindowData={setChatWindowData}
+        />
       </div>
     </>
   );
