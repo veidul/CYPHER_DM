@@ -24,6 +24,7 @@ const httpLink = new HttpLink({
   uri: "http://localhost:3001/graphql",
 });
 
+<<<<<<< HEAD
 const wsLink = new GraphQLWsLink(
   createClient({
     url:
@@ -32,6 +33,11 @@ const wsLink = new GraphQLWsLink(
         : "ws://localhost:3001/subscriptions",
   })
 );
+=======
+const wsLink = new GraphQLWsLink(createClient({
+  url:  process.env.NODE_ENV === "production" ? 'ws://something.herokuapp.com' : 'ws://localhost:3001/graphql'
+}));
+>>>>>>> cb1a80d8392f499ffd1b92bdaa7dd14c282352b4
 
 const splitLink = split(
   ({ query }) => {
