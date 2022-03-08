@@ -44,12 +44,21 @@ export const ADD_MESSAGE = gql`
 `;
 // might need to change id references
 export const ADD_CYPHER_USER = gql`
-  mutation addCypherUser($input: UserInput!) {
-    addCypherUser(input: $input) {
+  mutation addCypherUser($_id: ID!) {
+    addCypherUser(_id: $_id) {
       _id
       createdAt
-      users
-      messages
+      messages {
+        createdAt
+        messageText
+        username
+        cypherId
+      }
+      users {
+        _id
+        username
+        email
+      }
     }
   }
 `;

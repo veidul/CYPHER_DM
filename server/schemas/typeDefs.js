@@ -46,7 +46,7 @@ const typeDefs = gql`
     addCypher(input: UserInput!): Cypher
     addUser(username: String!, email: String!, password: String!): Auth
     addMessage(cypherId: String, messageText: String): Cypher
-    addCypherUser(_id: ID!, input: UserInput!): Cypher
+    addCypherUser(_id: ID!): Cypher
   }
 
   type Subscription {
