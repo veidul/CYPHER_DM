@@ -20,6 +20,7 @@ export default function componentName() {
   });
   const { __typename, ...userData } = data?.me || {};
   const onClick = async () => {
+    console.log(userData);
     try {
       const cypherCreated = await addCypher({ variables: { input: userData } });
     } catch (err) {

@@ -19,8 +19,8 @@ const typeDefs = gql`
     _id: ID
     createdAt: String
     messageText: String
-    messageAuthor: String
     user: User
+    cypher: Cypher
   }
 
   type Auth {
@@ -45,14 +45,14 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addCypher(input: UserInput!): Cypher
     addUser(username: String!, email: String!, password: String!): Auth
-    addMessage(_id: ID!, input: UserInput!, messageText: String!): Cypher
+    addMessage(_id: ID!, messageText: String!): Cypher
     addCypherUser(_id: ID!, input: UserInput!): Cypher
   }
 
   type Subscription {
-      newCypherUser(userId: Int): User
-      newMessage(messageText: String, cypherId: ID): Cypher
-      newCypher: Cypher  
+    newCypherUser(userId: Int): User
+    newMessage(messageText: String, cypherId: ID): Cypher
+    newCypher: Cypher
   }
 `;
 
