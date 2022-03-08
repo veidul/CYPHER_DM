@@ -25,14 +25,17 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_MESSAGE = gql`
-  mutation addMessage($_id: ID!, $messageText: String!) {
-    addMessage(_id: $_id, messageText: $messageText) {
+  mutation addMessage($_id: ID!, $messageText: String!, $input: UserInput!) {
+    addMessage(input: $input, messageText: $messageText) {
       _id
       message {
         messageText
         createdAt
         user {
+          _id
           username
+          email
+          password
         }
       }
     }
