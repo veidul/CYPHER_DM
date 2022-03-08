@@ -12,6 +12,7 @@ export default function ChatWindow({
   setChatWindowData,
 }) {
   const [messageText, setMessageText] = useState("");
+  const [addMessage, { error }] = useMutation(ADD_MESSAGE);
   // const onClick = async () => {
   //   try {
   //     const cypherCreated = await addCypher({ variables: { input: userData } });
@@ -22,8 +23,10 @@ export default function ChatWindow({
 
   //set chatWindowData + new message
   const submitHandler = async () => {
+    console.log(chatWindowData);
     const text = document.getElementById("inputText").value;
     setMessageText(text);
+    // addMessage({variables: {_id: chatWindowData._id, messageText}})
   };
   return (
     <>

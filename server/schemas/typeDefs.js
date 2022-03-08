@@ -19,7 +19,8 @@ const typeDefs = gql`
     _id: ID
     createdAt: String
     messageText: String
-    username: User
+    user: User
+    cypher: Cypher
   }
 
   type Auth {
