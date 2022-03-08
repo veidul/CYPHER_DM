@@ -5,8 +5,7 @@ const { signToken } = require("../utils/auth");
 const pubsub = new PubSub();
 const NEW_CYPHER_USER = "NEW_USER";
 const NEW_MESSAGE = "NEW_MESSAGE";
-const NEW_CYPHER = "NEW_CYPHER"
-
+const NEW_CYPHER = "NEW_CYPHER";
 
 const resolvers = {
   Subscription: {
@@ -14,11 +13,11 @@ const resolvers = {
       subscribe: () => pubsub.asyncIterator([NEW_CYPHER_USER]),
     },
     newMessage: {
-      subscribe: () => pubsub.asyncIterator([NEW_MESSAGE])
+      subscribe: () => pubsub.asyncIterator([NEW_MESSAGE]),
     },
     newCypher: {
-      subscribe: () => pubsub.asyncIterator([NEW_CYPHER])
-    }
+      subscribe: () => pubsub.asyncIterator([NEW_CYPHER]),
+    },
   },
   Query: {
     me: async (parent, args, context) => {
@@ -32,7 +31,14 @@ const resolvers = {
       // may want to flip to a possitive number depending on how it is returned
       // searching for user object may not work
       const data = await Cypher.find({}).populate("users").populate("messages");
-      console.log(data);
+      return data;
+    },
+    cypher: async (parent, { _id }) => {
+      // may want to flip to a possitive number depending on how it is returned
+      // searching for user object may not work
+      const data = await Cypher.find({ _id })
+        .populate("users")
+        .populate("messages");
       return data;
     },
   },
@@ -56,13 +62,12 @@ const resolvers = {
     },
     addUser: async (parent, { username, email, password }) => {
       console.log("payload received", username);
-      try{
-
+      try {
         const user = await User.create({ username, email, password });
         const token = signToken(user);
         return { token, user };
-      }catch(e){
-        console.log(e)
+      } catch (e) {
+        console.log(e);
       }
     },
     addCypher: async (parent, input, context) => {
@@ -71,22 +76,21 @@ const resolvers = {
       //if there's a user, create cypher, else return
       const cypher = await Cypher.create({ users: [user._id], messages: [] });
       const data = await cypher.populate("users");
-      await pubsub.publish(NEW_CYPHER, data);
-      return data
+      pubsub.publish(NEW_CYPHER, data);
+      return data;
     },
-    addMessage: async (parent, { _id, messageText, context }) => {
+    addMessage: async (parent, { _id, messageText }, context) => {
       const user = await User.findOne({ _id: context.user._id });
-      return Cypher.findOneAndUpdate(
+      const messageData = await Message.create({ user: user._id, messageText });
+      const cypher = await Cypher.findOneAndUpdate(
         { _id },
         {
           // we will want to find userName from the userId.
-          $addToSet: { messages: { messageText, user } },
-        },
-        {
-          new: true,
-          runValidators: true,
+          $addToSet: { messages: [messageData] },
         }
       );
+      const data = await cypher.populate("users").populate("messages");
+      return data;
     },
     addCypherUser: async (parent, _id, context) => {
       const user = await User.findOne({ _id: context.user._id });
@@ -94,7 +98,7 @@ const resolvers = {
         { _id },
         {
           // we might want to update this to include username and userId
-          $addToSet: { users: { user } },
+          $addToSet: { users: [user._id] },
         }
       );
     },

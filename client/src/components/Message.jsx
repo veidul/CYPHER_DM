@@ -1,6 +1,11 @@
 import React from "react";
 
-export default function Message({ cypherData }) {
+export default function Message({
+  cypherData,
+  message,
+  setChatWindowData,
+  chatWindowData,
+}) {
   return (
     <>
       <div className="bg-slate-900 hover:bg-slate-800 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -25,10 +30,10 @@ export default function Message({ cypherData }) {
           <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
             <div className="flex justify-between">
               <h3 className="text-lg leading-6 font-medium text-gray-500">
-                {/* {usersTitle ? usersTitle : ""} */}
+                {chatWindowData.users[0].userName}
               </h3>
               <p className="text-sm font-bold text-gray-500">
-                {/* {lastMessageDate ? lastMessageDate : ""} */}
+                {message ? message : "no message"}
               </p>
             </div>
             <div className="flex justify-start mt-2">
@@ -36,7 +41,7 @@ export default function Message({ cypherData }) {
                 {/* {lastMessageText ? lastMessageText : ""} */}
               </p>
               <p className="text-sm text-gray-500">
-                {cypherData ? cypherData._id : "testing"}
+                {/* {cypherData ? cypherData._id : "testing"} */}
               </p>
             </div>
           </div>

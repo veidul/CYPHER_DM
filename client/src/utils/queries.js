@@ -29,3 +29,24 @@ export const GET_CYPHERS = gql`
     }
   }
 `;
+
+export const GET_CYPHER = gql`
+  query cypher($_id: ID) {
+    cyphers(_id: $_id) {
+      _id
+      createdAt
+      messages {
+        createdAt
+        messageText
+        user {
+          username
+        }
+      }
+      users {
+        _id
+        username
+        email
+      }
+    }
+  }
+`;

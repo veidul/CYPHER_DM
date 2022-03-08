@@ -8,14 +8,13 @@ const messageSchema = new Schema({
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  username: { type: Schema.Types.ObjectId, ref: "User" },
   messageText: {
     type: String,
     require: true,
     minLength: 1,
     maxLength: 500,
   },
-  cypherId: { type: Schema.Types.ObjectId, ref: "Cypher" }
 });
 const Message = model("Message", messageSchema);
 module.exports = Message;
