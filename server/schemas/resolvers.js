@@ -95,7 +95,9 @@ const resolvers = {
           $addToSet: { messages: [messageData] },
         }
       );
-      const data = await cypher.populate("users").populate("messages");
+      const data = await Cypher.findOne({ _id: cypherId })
+        .populate("users")
+        .populate("messages");
       return data;
     },
     addCypherUser: async (parent, _id, context) => {
