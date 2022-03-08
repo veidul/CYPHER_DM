@@ -40,14 +40,13 @@ export default function ChatWindow({
       <div className="float-right flex-col relative h-screen w-9/12 bg-red">
         <div className="bg-red relative h-5/6 border-2 rounded-t border-black mt-1 m-l-1 overflow-auto">
           {!cypherLoading && chatWindowData.messages
-            ? chatWindowData.users.map((user) => (
-                <h1>{user.username}</h1>
-                // <Message
-                //   message={message}
-                //   setChatWindowData={setChatWindowData}
-                //   cypherData={cypher}
-                //   chatWindowData={chatWindowData}
-                // />
+            ? chatWindowData.messages.map((message) => (
+                <Message
+                  message={message}
+                  setChatWindowData={setChatWindowData}
+                  cypherData={cypher}
+                  chatWindowData={chatWindowData}
+                />
               ))
             : "Messages are loading!"}
         </div>
