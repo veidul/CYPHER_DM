@@ -17,9 +17,8 @@ export const GET_CYPHERS = gql`
       messages {
         createdAt
         messageText
-        user {
-          username
-        }
+        username
+        cypherId
       }
       users {
         _id
@@ -38,9 +37,8 @@ export const GET_CYPHER = gql`
       messages {
         createdAt
         messageText
-        user {
-          username
-        }
+        username
+        cypherId
       }
       users {
         _id
