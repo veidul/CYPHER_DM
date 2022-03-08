@@ -57,6 +57,7 @@ export default function ChatWindow({
           {chatWindowData.messages
             ? chatWindowData.messages.map((message) => (
                 <Message
+                  key={Math.random()}
                   message={message}
                   setChatWindowData={setChatWindowData}
                   chatWindowData={chatWindowData}

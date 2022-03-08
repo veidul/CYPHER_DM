@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { GET_CYPHER } from "../utils/queries";
+import Modal from "./modal";
 
 /*
 cypher contains
@@ -31,7 +32,7 @@ export default function Cypher({
 }) {
   // console.log(cypherData, "data");
   // const { __typename, ...consoleData } = cypherData || {};
-  // console.log(cypherData._id, "id");
+  const cypherId = cypherData._id;
   const loadCypher = () => {
     // console.log(cypherData._id, "consoleData log");
     try {
@@ -90,6 +91,7 @@ export default function Cypher({
                 {cypherData ? cypherData._id : "testing"}
               </p>
             </div>
+            <Modal cypherId={cypherId} />
           </div>
         </div>
       </div>
