@@ -1,19 +1,25 @@
 import React from "react";
-import CopyBtn from "./CpyBtn";
+import AddUserBtn from "./AddUserBtn";
+import { useMutation } from "@apollo/client";
+import { ADD_CYPHER_USER } from "../utils/mutations";
 
-export default function Modal(cypherId) {
+export default function AddUserModal() {
   const [showModal, setShowModal] = React.useState(false);
-  const copyText = document.querySelector("#copyMe");
-  const showText = document.querySelector("p");
+  const [addCypherUser, { error }] = useMutation(ADD_CYPHER_USER);
 
+  const onSubmit = () => {
+    const cypherIdInput = document.getElementById("cypherIdInput").value;
+    console.log(cypherIdInput);
+    addCypherUser({ variables: { _id: cypherIdInput } });
+  };
   return (
     <>
       <button
-        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="bg-pink-500 text-black active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
       >
-        Share CypherId
+        Join Cypher with Id
       </button>
       {showModal ? (
         <>
@@ -23,7 +29,7 @@ export default function Modal(cypherId) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Copy CypherId</h3>
+                  <h3 className="text-3xl font-semibold">Join Cypher</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
@@ -33,7 +39,14 @@ export default function Modal(cypherId) {
                     </span>
                   </button>
                 </div>
-                <CopyBtn textToCopy={cypherId} />
+                <input id="cypherIdInput" text="Paste CypherId Here" />
+                <button
+                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={onSubmit}
+                >
+                  Join Cypher
+                </button>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -41,13 +54,6 @@ export default function Modal(cypherId) {
                     onClick={() => setShowModal(false)}
                   >
                     Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Save Changes
                   </button>
                 </div>
               </div>

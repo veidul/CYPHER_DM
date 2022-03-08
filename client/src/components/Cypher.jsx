@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { GET_CYPHER } from "../utils/queries";
-import Modal from "./modal";
+import CpyModal from "./CpyModal";
 
 /*
 cypher contains
@@ -91,7 +91,7 @@ export default function Cypher({
                 {cypherData ? cypherData._id : "testing"}
               </p>
             </div>
-            <Modal cypherId={cypherId} />
+            <CpyModal cypherId={cypherId} />
           </div>
         </div>
       </div>

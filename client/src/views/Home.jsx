@@ -5,6 +5,7 @@ import { ADD_CYPHER } from "../utils/mutations";
 import CypherMenu from "../components/CypherMenu";
 import ChatWindow from "../components/ChatWindow";
 import { CYPHER_ADDED } from "../utils/subscription";
+import AddUserModal from "../components/AddUserModal";
 export default function componentName() {
   const [chatWindowData, setChatWindowData] = useState([]);
   const { loading, data } = useQuery(GET_ME);
@@ -44,23 +45,8 @@ export default function componentName() {
             </h1>
             <div className="flex justify-center">
               <div className="mb-3 xl:w-96">
-                <div className="input-group relative flex items-stretch w-full my-4">
-                  <input
-                    type="search"
-                    className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white
-       bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    placeholder="Search"
-                    aria-label="Search"
-                    aria-describedby="button-addon3"
-                  />
-                  <button
-                    className="btn inline-block px-6 py-2 bg-purple-600 text-white font-medium text-xs leading-tight uppercase hover:bg-purple-700 focus:ring-offset-purple-200
-       focus:outline-none focus:ring-2 transition duration-200 ease-in-out focus:ring-offset-2 rounded-lg"
-                    type="button"
-                    id="button-addon3"
-                  >
-                    Search
-                  </button>
+                <div className="relative flex items-stretch w-full my-4">
+                  <AddUserModal />
                 </div>
               </div>
             </div>
