@@ -18,7 +18,7 @@ export default function componentName() {
       });
     },
   });
-  const { loading: cypherAddedLoading, data:newCypherData } = useSubscription(CYPHER_ADDED)
+  const { loading: cypherAddedLoading, data: newCypherData } = useSubscription(CYPHER_ADDED)
   const { __typename, ...userData } = data?.me || {};
   const onClick = async () => {
     try {

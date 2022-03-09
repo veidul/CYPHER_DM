@@ -10,7 +10,7 @@ export default function ChatWindow({ cypherLoading, cypherData }) {
         <div className="bg-red relative h-5/6 border-2 rounded-t border-black mt-1 m-l-1 overflow-auto">
           {!cypherLoading &&
             cypherData?.cyphers &&
-            cypherData.cyphers.map((cypher) => <Message cypherData={cypher} />)}
+            cypherData.cyphers.map((cypher) => <Message key={Math.random()} cypherData={cypher} />)}
         </div>
         <div className="bg-blue absolute w-full h-1/6 border-x-2 rounded-b border-b-2 border-black">
           <input
