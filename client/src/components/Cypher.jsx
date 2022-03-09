@@ -40,7 +40,7 @@ export default function Cypher({
     } catch (err) {
       console.log(err);
     }
-    console.log(cypherData);
+    console.log(cypherData, "cypherData line 43 cypher.jsx");
     // console.log(chatWindowData);
     //code to to fetch this cyphers data
 
@@ -53,7 +53,7 @@ export default function Cypher({
   return (
     <>
       <div
-        className="bg-slate-900 hover:bg-slate-800 h-5/6 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
+        className="bg-slate-900 hover:bg-slate-800 h-5/6 rounded-b px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-y-2 border-gray-600"
         onClick={loadCypher}
       >
         <div className="flex items-start">
@@ -77,7 +77,7 @@ export default function Cypher({
           <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
             <div className="flex justify-between">
               <h3 className="text-lg leading-6 font-medium text-gray-500">
-                {/* {usersTitle ? usersTitle : ""} */}
+                Users:{cypherData ? cypherData.users[0].username : "testing"}
               </h3>
               <p className="text-sm font-bold text-gray-500">
                 {/* {lastMessageDate ? lastMessageDate : ""} */}
@@ -88,7 +88,7 @@ export default function Cypher({
                 {/* {lastMessageText ? lastMessageText : ""} */}
               </p>
               <p className="text-sm text-gray-500">
-                {cypherData ? cypherData._id : "testing"}
+                cypherId:{cypherData ? cypherData._id : "testing"}
               </p>
             </div>
             <CpyModal cypherId={cypherId} />

@@ -1,5 +1,4 @@
 import React from "react";
-import AddUserBtn from "./AddUserBtn";
 import { useMutation } from "@apollo/client";
 import { ADD_CYPHER_USER } from "../utils/mutations";
 
@@ -15,8 +14,8 @@ export default function AddUserModal() {
   return (
     <>
       <button
-        className="bg-pink-500 text-black active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        type="button"
+        className="mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+        ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
         onClick={() => setShowModal(true)}
       >
         Join Cypher with Id
@@ -39,9 +38,14 @@ export default function AddUserModal() {
                     </span>
                   </button>
                 </div>
-                <input id="cypherIdInput" text="Paste CypherId Here" />
+                <input
+                  id="cypherIdInput"
+                  placeholder="Paste CypherId Here"
+                  className="border-2 border-gray-600"
+                />
                 <button
-                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+                  ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                   type="button"
                   onClick={onSubmit}
                 >
@@ -49,7 +53,8 @@ export default function AddUserModal() {
                 </button>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="mr-1 mb-1 py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+                    ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
