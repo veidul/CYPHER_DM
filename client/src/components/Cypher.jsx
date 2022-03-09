@@ -30,25 +30,20 @@ export default function Cypher({
   setChatWindowData,
   chatWindowData,
 }) {
-  // console.log(cypherData, "data");
-  // const { __typename, ...consoleData } = cypherData || {};
+  const usernameArray = [];
+  const usernames = cypherData.users.map(({ username }) => {
+    return username;
+  });
+  const usernamesJoined = usernames.join(",");
   const cypherId = cypherData._id;
   const loadCypher = () => {
-    // console.log(cypherData._id, "consoleData log");
     try {
       setChatWindowData(cypherData);
     } catch (err) {
       console.log(err);
     }
     console.log(cypherData, "cypherData line 43 cypher.jsx");
-    // console.log(chatWindowData);
-    //code to to fetch this cyphers data
-
-    //code to trigger dialogue ui render with fetch result
-
-    //code to publish socket.io event for connect
   };
-  //onClick handler to load dialogue UI
 
   return (
     <>
@@ -77,7 +72,7 @@ export default function Cypher({
           <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
             <div className="flex justify-between">
               <h3 className="text-lg leading-6 font-medium text-gray-500">
-                Users:{cypherData ? cypherData.users[0].username : "testing"}
+                Users: {usernamesJoined}
               </h3>
               <p className="text-sm font-bold text-gray-500">
                 {/* {lastMessageDate ? lastMessageDate : ""} */}
