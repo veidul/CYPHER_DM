@@ -17,9 +17,28 @@ export const GET_CYPHERS = gql`
       messages {
         createdAt
         messageText
-        user {
-          username
-        }
+        username
+        cypherId
+      }
+      users {
+        _id
+        username
+        email
+      }
+    }
+  }
+`;
+
+export const GET_CYPHER = gql`
+  query cypher($_id: ID) {
+    cyphers(_id: $_id) {
+      _id
+      createdAt
+      messages {
+        createdAt
+        messageText
+        username
+        cypherId
       }
       users {
         _id

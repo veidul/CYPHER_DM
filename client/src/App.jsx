@@ -2,37 +2,46 @@ import React, { useEffect } from "react";
 import "./assets/css/App.css";
 import "./assets/css/output.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ApolloClient, ApolloProvider, InMemoryCache, split, HttpLink } from "@apollo/client";
-import { getMainDefinition } from '@apollo/client/utilities';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  split,
+  HttpLink,
+} from "@apollo/client";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
 import { setContext } from "@apollo/client/link/context";
 import Register from "./components/register";
 import LoginForm from "./components/Login";
 import Home from "./views/Home";
 import About from "./views/About";
 import Nav from "./components/Nav";
-import Cypher from "./components/Cypher";
-
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3001/graphql'
+  uri: "http://localhost:3001/graphql",
 });
 
-const wsLink = new GraphQLWsLink(createClient({
-  url:  process.env.NODE_ENV === "production" ? 'ws://something.herokuapp.com' : 'ws://localhost:3001/graphql'
-}));
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url:
+      process.env.NODE_ENV === "production"
+        ? "ws://something.herokuapp.com"
+        : "ws://localhost:3001/subscriptions",
+  })
+);
 
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
     return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
     );
   },
   wsLink,
-  httpLink,
+  httpLink
 );
 
 const authLink = setContext((_, { headers }) => {
