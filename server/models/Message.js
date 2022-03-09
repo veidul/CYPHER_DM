@@ -16,7 +16,6 @@ const messageSchema = new Schema({
   },
   messageText: {
     type: String,
-    require: true,
     minLength: 1,
     maxLength: 500,
   },
