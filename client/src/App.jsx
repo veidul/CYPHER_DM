@@ -18,6 +18,7 @@ import LoginForm from "./components/Login";
 import Home from "./views/Home";
 import About from "./views/About";
 import Nav from "./components/Nav";
+// import { User } from "../../server/models";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:3001/graphql",
@@ -28,7 +29,7 @@ const wsLink = new GraphQLWsLink(
     url:
       process.env.NODE_ENV === "production"
         ? "ws://something.herokuapp.com"
-        : "ws://localhost:3001/subscriptions",
+        : "ws://localhost:3001/subscriptions"
   })
 );
 

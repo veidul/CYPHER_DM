@@ -19,8 +19,7 @@ export default function componentName() {
       });
     },
   });
-  const { loading: cypherAddedLoading, data: newCypherData } =
-    useSubscription(CYPHER_ADDED);
+  const { loading: cypherAddedLoading, data: newCypherData } = useSubscription(CYPHER_ADDED);
   const { __typename, ...userData } = data?.me || {};
   const onClick = async () => {
     try {
@@ -31,9 +30,8 @@ export default function componentName() {
   };
 
   useEffect(
-    () => console.log("new cypher sub", newCypherData),
-    [newCypherData]
-  );
+    () => console.log("new cypher sub", newCypherData)
+  , [newCypherData]);
 
   return (
     <>
