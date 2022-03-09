@@ -18,7 +18,7 @@ const typeDefs = gql`
   type Message {
     _id: ID
     createdAt: String
-    messageText: String!
+    messageText: String
     username: String
     cypherId: String
   }
@@ -50,7 +50,7 @@ const typeDefs = gql`
   }
 
   type Subscription {
-    newCypherUser(userId: Int): User
+    newCypherUser(userId: ID): User
     newMessage(messageText: String, cypherId: ID): Cypher
     newCypher: Cypher
   }

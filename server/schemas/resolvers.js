@@ -3,9 +3,7 @@ const { PubSub } = require("graphql-subscriptions");
 const { User, Cypher, Message } = require("../models");
 const { signToken } = require("../utils/auth");
 const pubsub = new PubSub();
-const NEW_CYPHER_USER = "NEW_USER";
-const NEW_MESSAGE = "NEW_MESSAGE";
-const NEW_CYPHER = "NEW_CYPHER";
+const CYPHER_ADDED = "CYPHER ADDED";
 
 const resolvers = {
   Subscription: {
@@ -16,7 +14,7 @@ const resolvers = {
       subscribe: () => pubsub.asyncIterator([NEW_MESSAGE]),
     },
     newCypher: {
-      subscribe: () => pubsub.asyncIterator([NEW_CYPHER]),
+      subscribe: () => pubsub.asyncIterator([CYPHER_ADDED]),
     },
   },
   Query: {
@@ -76,7 +74,7 @@ const resolvers = {
       //if there's a user, create cypher, else return
       const cypher = await Cypher.create({ users: [user._id], messages: [] });
       const data = await cypher.populate("users");
-      pubsub.publish(NEW_CYPHER, data);
+      pubsub.publish(CYPHER_ADDED, data);
       return data;
     },
     addMessage: async (parent, { cypherId, messageText }, context) => {
@@ -97,7 +95,7 @@ const resolvers = {
       );
       // const data = await Cypher.findOne({ _id: cypherId })
       //   .populate("users")
-      //   .populate("messages");
+      //   .populate("messages"); 
       return data;
     },
     addCypherUser: async (parent, _id, context) => {
