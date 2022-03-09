@@ -13,15 +13,15 @@ export default function Message({
           <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
             <div className="flex justify-start mt-1">
               <p className="text-sm text-white">
-                {message ? message.createdAt : "no message"}
+                {message.createdAt ? message.createdAt : "no message"}
               </p>
             </div>
             <div className="flex">
               <h3 className="text-md leading-6 font-medium text-white">
-                {message ? message.username : "no message"}-
+                {message.username ? message.username : "no message"}-
               </h3>
               <p className="text-md font-bold text-white">
-                {message ? message.messageText : "no message"}
+                {message.messageText ? message.messageText : "no message"}
               </p>
             </div>
           </div>

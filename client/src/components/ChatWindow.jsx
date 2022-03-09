@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Auth from "../utils/auth";
 import Message from "./Message";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_CYPHER } from "../utils/queries";
+import { GET_CYPHER, GET_CYPHERS } from "../utils/queries";
 import { ADD_MESSAGE } from "../utils/mutations";
 // add in mutation logic for ADD_MESSAGE
 
@@ -15,7 +15,29 @@ export default function ChatWindow({
 }) {
   //here we need to add in the use mutation and get it working. figure out what data needs to be passed to the function.
   const [messageText, setMessageText] = useState("");
-  const [addMessage, { error, data: mutationData }] = useMutation(ADD_MESSAGE);
+  console.log("chatwindow", chatWindowData);
+  console.log(cypherData, "UPDATED");
+  const [addMessage, { error, data: mutationData }] = useMutation(ADD_MESSAGE, {
+    update(cache, { data: { addMessage } }) {
+      const { cyphers } = cache.readQuery({
+        query: GET_CYPHERS,
+      });
+      console.log(addMessage);
+      console.log(cyphers);
+      setChatWindowData(addMessage);
+      cache.writeQuery({
+        query: GET_CYPHERS,
+        variables: { _id: cypherData._id },
+        data: {
+          cyphers: cyphers.map((a) =>
+            a._id === addMessage._id
+              ? { ...a, messages: addMessage.messages }
+              : a
+          ),
+        },
+      });
+    },
+  });
 
   // const { loading: updatedCypherLoading, data: updatedCypherData } = useQuery(
   //   GET_CYPHER,
@@ -42,14 +64,16 @@ export default function ChatWindow({
       },
     });
   };
-  if (mutationData) {
-    try {
-      setChatWindowData(mutationData.addMessage);
-      console.log(chatWindowData);
-    } catch (err) {
-      console.log(err, mutationData);
-    }
-  }
+
+  // if (mutationData) {
+  //   try {
+  //     console.log(mutationData, "mutation data");
+  //     setChatWindowData(mutationData.addMessage);
+  //     console.log(chatWindowData);
+  //   } catch (err) {
+  //     console.log(err, mutationData);
+  //   }
+  // }
   return (
     <>
       <div className="float-right flex-col relative h-screen w-9/12 bg-red">

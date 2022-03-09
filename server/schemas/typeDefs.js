@@ -18,7 +18,7 @@ const typeDefs = gql`
   type Message {
     _id: ID
     createdAt: String
-    messageText: String!
+    messageText: String
     username: String
     cypherId: String
   }
