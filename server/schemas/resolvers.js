@@ -88,21 +88,21 @@ const resolvers = {
         messageText,
         cypherId,
       });
-      await Cypher.findOneAndUpdate(
+      const data = await Cypher.findOneAndUpdate(
         { _id: cypherId },
         {
           // we will want to find userName from the userId.
           $addToSet: { messages: [messageData] },
         }
       );
-      const data = await Cypher.findOne({ _id: cypherId })
-        .populate("users")
-        .populate("messages");
+      // const data = await Cypher.findOne({ _id: cypherId })
+      //   .populate("users")
+      //   .populate("messages");
       return data;
     },
     addCypherUser: async (parent, _id, context) => {
       const user = await User.findOne({ _id: context.user._id });
-      Cypher.findOneAndUpdate(
+      await Cypher.findOneAndUpdate(
         { _id: _id },
         {
           // we might want to update this to include username and userId
