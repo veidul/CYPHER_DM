@@ -40,7 +40,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=" sm:px-6 sm:py-72 md:px-8 md:py-72 lg:px-10 lg:py-72">
+    <div className=" py-24 sm:px-6 sm:py-32 md:px-8 md:pt-48 lg:px-10 lg:pt-64">
       <div className="flex flex-col w-full h-fit max-w-md m-auto px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800">
         <div className="self-center mt-20 h-fit text-3xl font-bold text-gray-600 sm:text-3xl dark:text-white">
           Login To Your Account
