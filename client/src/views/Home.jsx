@@ -43,15 +43,10 @@ export default function componentName() {
             <h1 className=" text-center border-b-2 h-2/6 border-black text-black">
               Cyphers
             </h1>
-            <div className="flex justify-center">
-              <div className="mb-3 xl:w-96">
-                <div className="relative flex items-stretch w-full my-4"></div>
-              </div>
-            </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-2">
               <button
                 onClick={onClick}
-                className="py-2 px-4 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
+                className="py-2 px-2 bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 focus:ring-offset-purple-200 text-white w-32 transition
               ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
               >
                 {" "}

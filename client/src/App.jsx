@@ -18,7 +18,6 @@ import LoginForm from "./components/Login";
 import Home from "./views/Home";
 import About from "./views/About";
 import Nav from "./components/Nav";
-import Cypher from "./components/Cypher";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:3001/graphql",
