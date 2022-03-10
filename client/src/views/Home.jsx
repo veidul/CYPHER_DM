@@ -6,6 +6,7 @@ import CypherMenu from "../components/CypherMenu";
 import ChatWindow from "../components/ChatWindow";
 import { CYPHER_ADDED } from "../utils/subscription";
 import AddUserModal from "../components/AddUserModal";
+import Auth from "../utils/auth";
 export default function componentName() {
   const [chatWindowData, setChatWindowData] = useState([]);
   const { loading, data } = useQuery(GET_ME);
@@ -19,6 +20,7 @@ export default function componentName() {
       });
     },
   });
+  console.log(Auth.getUser(), "get user from local storage");
   const { loading: cypherAddedLoading, data: newCypherData } =
     useSubscription(CYPHER_ADDED);
   const { __typename, ...userData } = data?.me || {};

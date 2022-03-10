@@ -29,7 +29,8 @@ const Register = () => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
-      Auth.login(data.addUser.token);
+      const user = data.login.user.username;
+      Auth.login(data.login.token, user);
     } catch (err) {
       console.error(err);
     }
