@@ -54,7 +54,7 @@ export default function ChatWindow({
   return (
     <>
       <div className="float-right flex-col relative h-screen w-9/12">
-        <div className="relative h-5/6 border-2 rounded-t border-black mt-1 m-l-1 overflow-auto">
+        <div className="relative h-5/6 border-2 rounded-t border-black overflow-auto">
           <ul className="space-y-12 grid grid-cols-1">
             {chatWindowData.messages
               ? chatWindowData.messages.map((message) => (
