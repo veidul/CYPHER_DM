@@ -11,30 +11,46 @@ export default function Message({
   const user = Auth.getUser(); // the currently logged in user
   console.log(user, "line 11 user id on message.jsx");
   function isMessageFromUser() {
-    return user == message.username;
+    return user === message.username;
   }
   console.log(isMessageFromUser());
   return (
     <>
-      <div className="bg-slate-900 rounded px-1 pt-1 pb-1 sm:p-6 sm:pb-4">
-        <div className="flex items-start">
-          <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <div className="flex justify-start mt-1">
-              <p className="text-sm text-white">
-                {message.createdAt ? message.createdAt : "no message"}
-              </p>
-            </div>
-            <div className="flex">
-              <h3 className="text-md leading-6 font-medium text-white">
-                {message.username ? message.username : "no message"}-
-              </h3>
-              <p className="text-md font-bold text-white">
-                {message.messageText ? message.messageText : "no message"}
-              </p>
-            </div>
-          </div>
+      <div
+        className={`${
+          isMessageFromUser() ? "place-self-end" : "place-self-start"
+        } space-y-2`}
+      >
+        <div
+          className={`bg-white p-5 rounded-2xl ${
+            isMessageFromUser() ? "rounded-tr-none" : "rounded-tl-none"
+          }`}
+        >
+          {message.createdAt ? message.createdAt : "no timestamp"}
+          <br />
+          {message.username ? message.username : "no username"} :{" "}
+          {message.messageText ? message.messageText : "no message"}
         </div>
       </div>
+      {/* <div className="bg-slate-900 rounded px-1 pt-1 pb-1 sm:p-6 sm:pb-4"> */}
+      {/* <div className="flex items-start"> */}
+      {/* <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left"> */}
+      {/* <div className="flex justify-start mt-1"> */}
+      {/* <p className="text-sm text-white"> */}
+      {/* {message.createdAt ? message.createdAt : "no message"} */}
+      {/* </p> */}
+      {/* </div> */}
+      {/* <div className="flex"> */}
+      {/* <h3 className="text-md leading-6 font-medium text-white"> */}
+      {/* {message.username ? message.username : "no message"}- */}
+      {/* </h3> */}
+      {/* <p className="text-md font-bold text-white"> */}
+      {/* {message.messageText ? message.messageText : "no message"} */}
+      {/* </p> */}
+      {/* </div> */}
+      {/* </div> */}
+      {/* </div> */}
+      {/* </div> */}
     </>
   );
 }
