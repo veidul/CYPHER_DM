@@ -2,36 +2,6 @@ import React, { useState } from "react";
 import Auth from "../utils/auth";
 import Cypher from "./Cypher";
 
-/*
-cypher contains
-{
-    createdAt: ,
-    users: [
-        {
-            userId: ,
-            //need userName: ,
-        }
-    ],
-    messages: [
-        {
-            messageText: ,
-            messageAuthor: ,
-            userId: ,
-            createdAt: ,
-        }
-    ],   
-}
-
-  //logic for filtering cypher data based on who is logged in
-  const menuFilter = async (user, cyphers) =>{
-
-    console.log("ON LINE 25 in HOME\n",userData._id);
-    console.log("ON LINE 26 in HOME\n",cypherData.cyphers);
-  }
-
-  menuFilter(userData, cypherData);
-
-*/
 export default function CypherMenu({
   userData,
   cypherLoading,
@@ -71,7 +41,7 @@ export default function CypherMenu({
 
   return (
     <>
-      <div className="flex flex-col bg-slate-900 h-full border-2 m-0 border-black relative align-bottom rounded-lg text-left shadow-xl transform transition-all overflow-auto sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div className="flex flex-col bg-slate-900 h-full border-2 m-0 border-black relative align-bottom rounded-lg text-left shadow-xl transform transition-all overflow-auto sm:align-middle sm:max-w-lg sm:w-full">
         {/*needs code to map cyperData as cypher component*/}
         {!cypherLoading &&
           cypherData?.cyphers &&
