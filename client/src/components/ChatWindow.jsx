@@ -34,13 +34,14 @@ export default function ChatWindow({
     },
   });
   const submitHandler = async () => {
-    const text = document.getElementById("inputText").value;
+    let text = document.getElementById("inputText").value;
     await addMessage({
       variables: {
         messageText: text,
         cypherId: chatWindowData._id,
       },
     });
+    text = document.getElementById("inputText").value = "";
   };
   // scrolls to bottom of chat window
   const messagesEndRef = useRef(null);
