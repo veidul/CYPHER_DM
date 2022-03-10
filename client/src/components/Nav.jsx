@@ -25,6 +25,9 @@ export default function Nav() {
 									<Link to="/" className="mr-5 hover:text-white">
 										Home
 									</Link>
+									<Link to="/about" className="mr-5 hover:text-white">
+										About
+									</Link>
 									{Auth.loggedIn() ? (<Link onClick={Auth.logout} to="/login" className="mr-5 hover:text-white">
 										logout
 									</Link>) : (<Link to="/login" className="mr-5 hover:text-white">
