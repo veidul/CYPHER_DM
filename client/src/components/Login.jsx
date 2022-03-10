@@ -40,13 +40,16 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=" py-24 sm:px-6 sm:py-32 md:px-8 md:pt-48 lg:px-10 lg:pt-64">
+    <div className=" py-24 sm:px-6 sm:py-32 md:px-8 md:pt-48 lg:px-10 lg:pt-24">
       <div className="flex flex-col w-full h-fit max-w-md m-auto px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800">
         <div className="self-center mt-20 h-fit text-3xl font-bold text-gray-600 sm:text-3xl dark:text-white">
           Login To Your Account
         </div>
         <div className="mt-8">
-          <form className="my-16" onSubmit={(e) => handleSubmit(handleFormSubmit(e))}>
+          <form
+            className="my-16"
+            onSubmit={(e) => handleSubmit(handleFormSubmit(e))}
+          >
             <div className="flex flex-col mb-2">
               <div className="flex relative ">
                 <span className="rounded-l-md inline-flex  items-center px-3 border-t bg-white border-l border-b  border-gray-300 text-gray-500 shadow-sm text-sm">
