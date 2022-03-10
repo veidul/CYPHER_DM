@@ -25,26 +25,16 @@ export default function Nav() {
 									<Link to="/" className="mr-5 hover:text-white">
 										Home
 									</Link>
+									<Link to="/about" className="mr-5 hover:text-white">
+										About
+									</Link>
 									{Auth.loggedIn() ? (<Link onClick={Auth.logout} to="/login" className="mr-5 hover:text-white">
-										logout
+										Logout
 									</Link>) : (<Link to="/login" className="mr-5 hover:text-white">
-										login
+										Login
 									</Link>)	
 									}
 								</div>
-
-								<div className="flex justify-end">
-									
-									<a
-										href="https://github.com/bemijonathan/Vite-react-tailwind-netlify-starter-kit"
-										target="_blank"
-										rel="noreferrer"
-										className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
-									>
-										GitHub
-									</a>
-								</div>
-
 							</div>
 
 
