@@ -13,17 +13,12 @@ export default function ChatWindow({
   setChatWindowData,
   userData,
 }) {
-  //here we need to add in the use mutation and get it working. figure out what data needs to be passed to the function.
   const [messageText, setMessageText] = useState("");
-  console.log("chatwindow", chatWindowData);
-  console.log(cypherData, "UPDATED");
   const [addMessage, { error, data: mutationData }] = useMutation(ADD_MESSAGE, {
     update(cache, { data: { addMessage } }) {
       const { cyphers } = cache.readQuery({
         query: GET_CYPHERS,
       });
-      console.log(addMessage);
-      console.log(cyphers);
       setChatWindowData(addMessage);
       cache.writeQuery({
         query: GET_CYPHERS,
@@ -39,24 +34,8 @@ export default function ChatWindow({
     },
   });
 
-  // const { loading: updatedCypherLoading, data: updatedCypherData } = useQuery(
-  //   GET_CYPHER,
-  //   {
-  //     variables: { _id: chatWindowData._id },
-  //   }
-  // );
-  // const onClick = async () => {
-  //   try {
-  //     const cypherCreated = await addCypher({ variables: { input: userData, messageText, _id: chatWindowData._id }});
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  //set chatWindowData + new message
   const submitHandler = async () => {
     const text = document.getElementById("inputText").value;
-    // setMessageText(text);
     await addMessage({
       variables: {
         messageText: text,
@@ -64,16 +43,6 @@ export default function ChatWindow({
       },
     });
   };
-
-  // if (mutationData) {
-  //   try {
-  //     console.log(mutationData, "mutation data");
-  //     setChatWindowData(mutationData.addMessage);
-  //     console.log(chatWindowData);
-  //   } catch (err) {
-  //     console.log(err, mutationData);
-  //   }
-  // }
   return (
     <>
       <div className="float-right flex-col relative h-screen w-9/12 bg-red">
