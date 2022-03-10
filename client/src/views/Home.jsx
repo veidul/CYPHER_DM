@@ -10,7 +10,6 @@ export default function componentName() {
   const [chatWindowData, setChatWindowData] = useState([]);
   const { loading, data } = useQuery(GET_ME);
   const { loading: cypherLoading, data: cypherData } = useQuery(GET_CYPHERS);
-
   const { loading: cypherAddedLoading, data: newCypherData } =
     useSubscription(CYPHER_ADDED);
   const { __typename, ...userData } = data?.me || {};
@@ -45,8 +44,8 @@ export default function componentName() {
             cypherLoading={cypherLoading}
             cypherData={cypherData}
             chatWindowData={chatWindowData}
-            setChatWindowData={setChatWindowData} 
-            />
+            setChatWindowData={setChatWindowData}
+          />
           <CypherMenu
             userData={userData}
             cypherLoading={cypherLoading}

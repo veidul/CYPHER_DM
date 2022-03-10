@@ -1,4 +1,5 @@
 import React from "react";
+import Auth from "../utils/auth";
 
 export default function Message({
   cypherData,
@@ -6,6 +7,13 @@ export default function Message({
   setChatWindowData,
   chatWindowData,
 }) {
+  console.log(message, "message info");
+  const user = Auth.getUser(); // the currently logged in user
+  console.log(user, "line 11 user id on message.jsx");
+  function isMessageFromUser() {
+    return user == message.username;
+  }
+  console.log(isMessageFromUser());
   return (
     <>
       <div className="bg-slate-900 rounded px-1 pt-1 pb-1 sm:p-6 sm:pb-4">
