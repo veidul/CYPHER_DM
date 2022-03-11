@@ -29,7 +29,7 @@ const wsLink = new GraphQLWsLink(
     url:
       process.env.NODE_ENV === "production"
         ? "ws://something.herokuapp.com"
-        : "ws://localhost:3001/subscriptions",
+        : "ws://localhost:3001/graphql"
   })
 );
 
@@ -56,8 +56,7 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(splitLink),
-  // link: httpLink,
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 });
 
 //basic functional component that returns an element passed via props if auth

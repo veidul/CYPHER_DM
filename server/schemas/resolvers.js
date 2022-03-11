@@ -3,20 +3,20 @@ const { PubSub } = require("graphql-subscriptions");
 const { User, Cypher, Message } = require("../models");
 const { signToken } = require("../utils/auth");
 const pubsub = new PubSub();
-const NEW_CYPHER_USER = "NEW_USER";
+const CYPHER_ADDED = "CYPHER_ADDED";
 const NEW_MESSAGE = "NEW_MESSAGE";
-const NEW_CYPHER = "NEW_CYPHER";
+const NEW_CYPHER_USER = "NEW_CYPHER_USER";
 
 const resolvers = {
   Subscription: {
     newCypherUser: {
-      subscribe: () => pubsub.asyncIterator([NEW_CYPHER_USER]),
+      subscribe: () => pubsub.asyncIterator(NEW_CYPHER_USER),
     },
     newMessage: {
-      subscribe: () => pubsub.asyncIterator([NEW_MESSAGE]),
+      subscribe: () => pubsub.asyncIterator(NEW_MESSAGE),
     },
     newCypher: {
-      subscribe: () => pubsub.asyncIterator([NEW_CYPHER]),
+      subscribe: () => pubsub.asyncIterator(CYPHER_ADDED),
     },
   },
   Query: {
@@ -28,13 +28,13 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     cyphers: async () => {
-      // may want to flip to a possitive number depending on how it is returned
+      // may want to flip to a positive number depending on how it is returned
       // searching for user object may not work
       const data = await Cypher.find({}).populate("users").populate("messages");
       return data;
     },
     cypher: async (parent, { _id }) => {
-      // may want to flip to a possitive number depending on how it is returned
+      // may want to flip to a positive number depending on how it is returned
       // searching for user object may not work
       const data = await Cypher.find({ _id })
         .populate("users")
@@ -72,11 +72,11 @@ const resolvers = {
     },
     addCypher: async (parent, input, context) => {
       const user = await User.findOne({ _id: context.user._id });
-
       //if there's a user, create cypher, else return
-      const cypher = await Cypher.create({ users: [user._id], messages: [] });
+      const cypher = await Cypher.create({ users: [context.user._id], messages: [] });
       const data = await cypher.populate("users");
-      pubsub.publish(NEW_CYPHER, data);
+      pubsub.publish(CYPHER_ADDED, {newCypher: { data }});
+      console.log("PUBLISHING DATA --- ", data)
       return data;
     },
     addMessage: async (parent, { cypherId, messageText }, context) => {
@@ -97,6 +97,7 @@ const resolvers = {
       const data = await Cypher.findOne({ _id: cypherId })
         .populate("users")
         .populate("messages");
+      pubsub.publish(NEW_MESSAGE, {newMessage: { data }})
       return data;
     },
     addCypherUser: async (parent, _id, context) => {

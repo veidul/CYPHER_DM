@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import AddUserModal from "../components/AddUserModal";
 import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { ADD_CYPHER } from "../utils/mutations";
 import { GET_ME, GET_CYPHERS } from "../utils/queries";
+import { CYPHER_ADDED } from "../utils/subscription";
 
 export default function CypherSetUp({
   userData,
@@ -21,6 +22,14 @@ export default function CypherSetUp({
     },
   });
 
+  const {
+    data: newCypher,
+    loading,
+  } = useSubscription(CYPHER_ADDED);
+  useEffect(() => {
+    console.log("NEW CYPHER ADDED !!!!", newCypher);
+  }, [newCypher]);
+
   const onClick = async () => {
     try {
       const cypherCreated = await addCypher({ variables: { input: userData } });
@@ -28,7 +37,7 @@ export default function CypherSetUp({
       console.log(err);
     }
   };
-
+  console.log("NEW CYPHER !!", newCypher)
   return (
     <div className="flex flex-col h-1/6 bg-slate-800 border-2 ml-1 rounded border-slate-900">
       <h1 className=" text-center text-3xl text-corn-silk font-semibold border-b-2 h-3/6 border-slate-900 p-2">

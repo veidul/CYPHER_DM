@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const { ApolloServer } = require("apollo-server-express");
-const {makeExecutableSchema} = require("@graphql-tools/schema")
+const { makeExecutableSchema } = require("@graphql-tools/schema")
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3001;
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
 const db = require("./config/connection")
+const cors = require("cors");
 
 const app = express();
 
@@ -23,7 +24,6 @@ async function startApolloServer(typeDefs, resolvers) {
   const serverCleanup = useServer({schema}, wsServer);
 
   const server = new ApolloServer({
-    // schema,
     cors: {
       origin: "*",
       credentials: true,
@@ -40,16 +40,16 @@ async function startApolloServer(typeDefs, resolvers) {
       }
     }],
     context: authMiddleware,
-    // subscriptions: {
-    //   onconnect: (sub) => {
-    //     console.log(sub)
-    //     console.log("WS connected")
-    //   }
-    // }
+    subscriptions: {
+      onconnect: (sub) => {
+        console.log(sub)
+        console.log("WS connected")
+      }
+    }
   });
   await server.start();
-  // app.use(express.urlencoded({ extended: false }));
-  // app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
   server.applyMiddleware({ app });
 
 
@@ -67,3 +67,5 @@ async function startApolloServer(typeDefs, resolvers) {
 
 }
 startApolloServer(typeDefs, resolvers);
+
+

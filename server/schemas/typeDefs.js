@@ -7,7 +7,7 @@ const typeDefs = gql`
     email: String
     password: String
   }
-
+  
   type Cypher {
     _id: ID
     createdAt: String
@@ -29,7 +29,7 @@ const typeDefs = gql`
   }
 
   input UserInput {
-    _id: ID
+    _id: ID 
     username: String
     email: String
     password: String
@@ -50,8 +50,8 @@ const typeDefs = gql`
   }
 
   type Subscription {
-    newCypherUser(userId: Int): User
-    newMessage(messageText: String, cypherId: ID): Cypher
+    newCypherUser(userId: ID): User
+    newMessage(messageText: String, cypherId: ID, username: String): Cypher
     newCypher: Cypher
   }
 `;

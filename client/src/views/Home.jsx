@@ -15,9 +15,8 @@ export default function componentName() {
   const { __typename, ...userData } = data?.me || {};
 
   useEffect(
-    () => console.log("new cypher sub", newCypherData),
-    [newCypherData]
-  );
+    () => console.log("new cypher sub", newCypherData)
+  , [newCypherData]);
 
   return (
     <>
