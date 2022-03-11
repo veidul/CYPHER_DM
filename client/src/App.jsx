@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./assets/css/App.css";
 import "./assets/css/output.css";
-import { BrowserRouter as Router, Routes, Route, useNavigation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import {
   ApolloClient,
   ApolloProvider,
@@ -62,7 +62,7 @@ const client = new ApolloClient({
 //basic functional component that returns an element passed via props if auth
 //this component wraps our views and returns them based on auth in the routs section below
 function RequireAuth({ children }) {
-  const navigate = useNavigation()
+  const navigate = useNavigate()
   return Auth.loggedIn() ? children : navigate("/login");
 }
 
