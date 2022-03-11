@@ -34,12 +34,13 @@ export default function ChatWindow({
       });
     },
   });
-  const {data: newCypherUser,
-        loading,
-      } = useSubscription(MESSAGE_ADDED)
+  const {data: newMessage,
+   loading,
+  } = useSubscription(MESSAGE_ADDED)
     useEffect(() => {
 
-    }, [newCypherUser])
+    }, [newMessage])
+  console.log("Message Socket", newMessage)
   const submitHandler = async () => {
     let text = document.getElementById("inputText").value;
     await addMessage({

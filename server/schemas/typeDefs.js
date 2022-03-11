@@ -51,7 +51,7 @@ const typeDefs = gql`
 
   type Subscription {
     newCypherUser(userId: ID): User
-    newMessage(messageText: String, cypherId: ID, username: String): Cypher
+    newMessage(messageText: String, cypherId: String, username: String): Cypher
     newCypher: Cypher
   }
 `;
