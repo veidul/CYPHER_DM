@@ -25,32 +25,60 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_MESSAGE = gql`
-  mutation addMessage($cypherId: String!, $messageText: String!, $messageAuthor: String!) {
-    addMessage(cypherId: $cypherId, messageText: $messageText:, messageAuthor: $messageAuthor){
+  mutation addMessage($cypherId: String, $messageText: String!) {
+    addMessage(cypherId: $cypherId, messageText: $messageText) {
       _id
-      message {
-      messageText
-      messageAuthor
+      messages {
+        messageText
+        createdAt
+        username
+        cypherId
       }
+      users {
+        _id
+        username
+        email
       }
     }
+  }
 `;
 // might need to change id references
 export const ADD_CYPHER_USER = gql`
-  mutation addCypherUser($userId: String!, $cypherId: String!) {
-    addCypherUser(userId: $userId, cypherId: $cypherId)
-    _id
-    user {
-      userId
+  mutation addCypherUser($_id: ID!) {
+    addCypherUser(_id: $_id) {
+      _id
+      createdAt
+      messages {
+        createdAt
+        messageText
+        username
+        cypherId
+      }
+      users {
+        _id
+        username
+        email
+      }
     }
   }
 `;
 
 export const ADD_CYPHER = gql`
-  mutation addCypher($userId: String!) {
-    addCypher(userId: $userId)
-    user {
-      userId
+  mutation addCypher($input: UserInput!) {
+    addCypher(input: $input) {
+      _id
+      createdAt
+      messages {
+        createdAt
+        messageText
+        username
+        cypherId
+      }
+      users {
+        _id
+        username
+        email
+      }
     }
   }
 `;

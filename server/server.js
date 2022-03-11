@@ -1,39 +1,71 @@
 const express = require("express");
 const path = require("path");
 const { ApolloServer } = require("apollo-server-express");
-const db = require("./config/connection");
+const { makeExecutableSchema } = require("@graphql-tools/schema")
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
-const http = require("http");
+const { createServer } = require("http");
 const PORT = process.env.PORT || 3001;
+const { WebSocketServer } = require('ws');
+const { useServer } = require('graphql-ws/lib/use/ws');
+const db = require("./config/connection")
+const cors = require("cors");
 
 const app = express();
+
 async function startApolloServer(typeDefs, resolvers) {
-  const httpServer = http.createServer(app);
+  const schema = makeExecutableSchema({typeDefs, resolvers})
+  const httpServer = createServer(app);
+  const wsServer = new WebSocketServer({
+    server: httpServer,
+    path: '/graphql',
+  });
+  const serverCleanup = useServer({schema}, wsServer);
+
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    cors: {
+      origin: "*",
+      credentials: true,
+    },
+    schema,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer }),
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose();
+          }
+        }
+      }
+    }],
     context: authMiddleware,
+    subscriptions: {
+      onconnect: (sub) => {
+        console.log(sub)
+        console.log("WS connected")
+      }
+    }
   });
   await server.start();
-  server.applyMiddleware({ app });
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
+  server.applyMiddleware({ app });
+
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client")));
+  } else {
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, "../client/index.html"));
+    });
   }
-
-  app.get("*", (req, res) => {
-    console.log("line 30 route is hit");
-    res.sendFile(path.join(__dirname, "../client/index.html"));
+  httpServer.listen(PORT, () => {
+    console.log(`GQL server running on http://localhost:${PORT}/graphql`)
+    console.log(`WS server running on ws://localhost:${PORT}`)
   });
-  await new Promise((res) => httpServer.listen(PORT, res));
-  console.log(
-    `Graphql is ready at http://localhost:${PORT}${server.graphqlPath}`
-  );
-  console.log(`Server ready at http://localhost:${PORT}`);
+
 }
 startApolloServer(typeDefs, resolvers);
+
+

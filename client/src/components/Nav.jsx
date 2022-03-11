@@ -1,34 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Auth from "../utils/auth"
 
 export default function Nav() {
+
+
 	return (
 		<>
-			<header className="text-gray-500 bg-gray-900 body-font">
-				<div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-					<Link
-						to="/"
-						className="flex title-font font-medium items-center text-white mb-4 md:mb-0"
-					>
-						<span className="ml-3 text-xl">tailblocks</span>
-					</Link>
-					<nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-						<Link to="/" className="mr-5 hover:text-white">
-							Home
-						</Link>
-						<Link to="/about" className="mr-5 hover:text-white">
-							About
-						</Link>
+			<header className="py-4 text-gray-500 bg-gradient-to-r from-nav-left to-nav-right body-font">
+					<nav className="w-full h-full px-3 text-base">
+						<div className="grid grid-cols-6 gap-2">
+							<div className="col-start-1 col-end-5 flex justify-start">
+								<Link
+									to="/"
+									className="flex title-font font-medium items-center text-white mb-4 md:mb-0"
+								>
+									<span className=" font-mono ml-3 text-xl">-CYPHER_DM-</span>
+								</Link>
+							</div>
+
+							<div className="flex justify-end col-start-6 col-end-6">
+								<div>
+									
+									<Link to="/" className="mr-5 hover:text-white">
+										Home
+									</Link>
+									<Link to="/about" className="mr-5 hover:text-white">
+										About
+									</Link>
+									{Auth.loggedIn() ? (<Link onClick={Auth.logout} to="/login" className="mr-5 hover:text-white">
+										Logout
+									</Link>) : (<Link to="/login" className="mr-5 hover:text-white">
+										Login
+									</Link>)	
+									}
+								</div>
+							</div>
+
+
+						</div>
 					</nav>
-					<a
-						href="https://github.com/bemijonathan/Vite-react-tailwind-netlify-starter-kit"
-						target="_blank"
-						rel="noreferrer"
-						className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"
-					>
-						GitHub
-					</a>
-				</div>
 			</header>
 		</>
 	);

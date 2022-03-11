@@ -1,45 +1,59 @@
 const { gql } = require("apollo-server-express");
-
+// fix this
 const typeDefs = gql`
   type User {
-    userId: ID
+    _id: ID
     username: String
     email: String
     password: String
   }
-
+  
   type Cypher {
     _id: ID
     createdAt: String
-    messages: [Message]!
-    Users: [User]!
+    messages: [Message]
+    users: [User]
   }
 
   type Message {
     _id: ID
     createdAt: String
     messageText: String
-    messageAuthor: String
+    username: String
+    cypherId: String
   }
+
   type Auth {
     token: ID!
-    user: User
+    user: User!
   }
+
+  input UserInput {
+    _id: ID 
+    username: String
+    email: String
+    password: String
+  }
+
   type Query {
     me: User
-    cyphers: [Cypher]!
-    cyphers(_id: ID): Cypher
+    cypher(_id: ID): Cypher
+    cyphers: [Cypher]
   }
+
   type Mutation {
     login(email: String!, password: String!): Auth
-    addCypher: Cypher
+    addCypher(input: UserInput!): Cypher
     addUser(username: String!, email: String!, password: String!): Auth
-    addMessage(
-      cypherId: String!
-      messageText: String!
-      messageAuthor: String!
-    ): Cypher
-    addCypherUser(userId: String!, _id: String!): Cypher
+    addMessage(cypherId: String, messageText: String): Cypher
+    addCypherUser(_id: ID!): Cypher
+  }
+
+  type Subscription {
+    newCypherUser(userId: ID): User
+    newMessage(messageText: String, cypherId: String, username: String): Message
+    newCypher: Cypher
   }
 `;
+
 module.exports = typeDefs;

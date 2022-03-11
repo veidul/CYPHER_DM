@@ -1,9 +1,12 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
-    userName: {
+    // need to add in userId
+
+    username: {
       type: String,
       require: true,
       unique: true,
@@ -12,15 +15,10 @@ const userSchema = new Schema(
       type: String,
       require: true,
       unique: true,
-      match: [/.+@.+\..+/, "Must enter a valid email address!"],
     },
     password: {
       type: String,
       require: true,
-      match: [
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Must enter a password that is minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character",
-      ],
     },
   },
   // ask if we need this or not?
