@@ -29,8 +29,9 @@ const Register = () => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
-      const user = data.login.user.username;
-      Auth.login(data.login.token, user);
+      console.log("on line 32", data);
+      const user = data.addUser.user.username;
+      Auth.login(data.addUser.token, user);
     } catch (err) {
       console.error(err);
     }
