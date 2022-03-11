@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const CYPHER_ADDED = gql`
-    subscription onCypherAdded {
+    subscription newCypher {
         newCypher {
             _id
         }
@@ -20,7 +20,7 @@ export const MESSAGE_ADDED = gql `
 
 
 export const NEW_CYPHER_USER = gql` 
-    subscription onUserAdded {
+    subscription newCypherUser {
         newCypherUser {
             userId
         }

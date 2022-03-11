@@ -29,7 +29,7 @@ const typeDefs = gql`
   }
 
   input UserInput {
-    _id: ID
+    _id: ID 
     username: String
     email: String
     password: String

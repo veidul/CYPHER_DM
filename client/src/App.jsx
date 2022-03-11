@@ -29,7 +29,7 @@ const wsLink = new GraphQLWsLink(
     url:
       process.env.NODE_ENV === "production"
         ? "ws://something.herokuapp.com"
-        : "ws://localhost:3001/subscriptions"
+        : "ws://localhost:3001/graphql"
   })
 );
 

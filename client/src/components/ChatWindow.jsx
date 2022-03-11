@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import Auth from "../utils/auth";
 import Message from "./Message";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useSubscription } from "@apollo/client";
 import { GET_CYPHER, GET_CYPHERS } from "../utils/queries";
 import { ADD_MESSAGE } from "../utils/mutations";
 // add in mutation logic for ADD_MESSAGE
+import { MESSAGE_ADDED } from "../utils/subscription"
 
 export default function ChatWindow({
   cypherLoading,
@@ -33,6 +34,12 @@ export default function ChatWindow({
       });
     },
   });
+  const {data: newCypherUser,
+        loading,
+      } = useSubscription(MESSAGE_ADDED)
+    useEffect(() => {
+
+    }, [newCypherUser])
   const submitHandler = async () => {
     let text = document.getElementById("inputText").value;
     await addMessage({
