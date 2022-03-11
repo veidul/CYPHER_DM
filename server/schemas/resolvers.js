@@ -4,6 +4,8 @@ const { User, Cypher, Message } = require("../models");
 const { signToken } = require("../utils/auth");
 const pubsub = new PubSub();
 const CYPHER_ADDED = "CYPHER ADDED";
+const NEW_MESSAGE = "NEW_MESSAGE";
+const NEW_CYPHER_USER = "NEW_CYPHER_USER";
 
 const resolvers = {
   Subscription: {

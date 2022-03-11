@@ -9,3 +9,20 @@ export const CYPHER_ADDED = gql`
 `
 
 
+export const MESSAGE_ADDED = gql `
+    subscription onMessageAdded {
+        newMessage {
+            _id
+            messageText
+        }
+    }
+`
+
+
+export const NEW_CYPHER_USER = gql` 
+    subscription onUserAdded {
+        newCypherUser {
+            userId
+        }
+    }
+`

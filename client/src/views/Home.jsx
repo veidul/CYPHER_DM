@@ -10,22 +10,9 @@ export default function componentName() {
   const [chatWindowData, setChatWindowData] = useState([]);
   const { loading, data } = useQuery(GET_ME);
   const { loading: cypherLoading, data: cypherData } = useQuery(GET_CYPHERS);
-<<<<<<< HEAD
-  const [addCypher, { error }] = useMutation(ADD_CYPHER, {
-    update(cache, { data: { addCypher } }) {
-      const { cyphers } = cache.readQuery({ query: GET_CYPHERS });
-      cache.writeQuery({
-        query: GET_CYPHERS,
-        data: { cyphers: [...cyphers, addCypher] },
-      });
-    },
-  });
-  const { loading: cypherAddedLoading, data: newCypherData } = useSubscription(CYPHER_ADDED);
-=======
 
   const { loading: cypherAddedLoading, data: newCypherData } =
     useSubscription(CYPHER_ADDED);
->>>>>>> 7c067848abf3f7f439cbd5932b0a8f421c17706e
   const { __typename, ...userData } = data?.me || {};
 
   useEffect(
