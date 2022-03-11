@@ -13,7 +13,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { createClient } from "graphql-ws";
 import { setContext } from "@apollo/client/link/context";
-import Register from "./components/register";
+import Register from "./components/Register";
 import LoginForm from "./components/Login";
 import Home from "./views/Home";
 import About from "./views/About";
