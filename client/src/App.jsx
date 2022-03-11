@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./assets/css/App.css";
 import "./assets/css/output.css";
-import { BrowserRouter as Router, Routes, Route, useNavigate, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import {
   ApolloClient,
   ApolloProvider,
@@ -63,7 +63,7 @@ const client = new ApolloClient({
 //this component wraps our views and returns them based on auth in the routs section below
 function RequireAuth({ children }) {
   const navigate = useNavigate()
-  return Auth.loggedIn() ? children : <Redirect to="/login"></Redirect>;
+  return Auth.loggedIn() ? children : <Navigate to="/login"></Navigate>;
 }
 
 function App() {
