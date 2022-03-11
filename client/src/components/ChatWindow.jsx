@@ -34,12 +34,15 @@ export default function ChatWindow({
       });
     },
   });
-  const {data: newCypherUser,
-        loading,
-      } = useSubscription(MESSAGE_ADDED)
+  const {data:messageSub,
+   loading,
+  } = useSubscription(MESSAGE_ADDED)
     useEffect(() => {
-
-    }, [newCypherUser])
+      if(!chatWindowData.messages) return
+      console.log("Message Socket", messageSub);
+      if(chatWindowData._id === messageSub.newMessage.cypherId)
+      setChatWindowData({...chatWindowData, messages: [...chatWindowData.messages, messageSub.newMessage]})
+    }, [messageSub])
   const submitHandler = async () => {
     let text = document.getElementById("inputText").value;
     await addMessage({
@@ -55,7 +58,7 @@ export default function ChatWindow({
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  useEffect(() => {
+  useEffect(() => { 
     scrollToBottom();
   }, [chatWindowData]);
 

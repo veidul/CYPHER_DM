@@ -10,10 +10,13 @@ export const CYPHER_ADDED = gql`
 
 
 export const MESSAGE_ADDED = gql `
-    subscription onMessageAdded {
-        newMessage {
-            _id
+    subscription newMessage ($cypherId: String, $messageText: String){
+        newMessage (cypherId: $cypherId, messageText: $messageText) {
+            username
             messageText
+            createdAt
+            _id
+            cypherId
         }
     }
 `

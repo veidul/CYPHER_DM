@@ -75,8 +75,8 @@ const resolvers = {
       //if there's a user, create cypher, else return
       const cypher = await Cypher.create({ users: [context.user._id], messages: [] });
       const data = await cypher.populate("users");
-      pubsub.publish(CYPHER_ADDED, {newCypher: { data }});
-      console.log("PUBLISHING DATA --- ", data)
+      console.log("cypher data", data)
+      pubsub.publish(CYPHER_ADDED, {newCypher: data });
       return data;
     },
     addMessage: async (parent, { cypherId, messageText }, context) => {
@@ -97,7 +97,8 @@ const resolvers = {
       const data = await Cypher.findOne({ _id: cypherId })
         .populate("users")
         .populate("messages");
-      pubsub.publish(NEW_MESSAGE, {newMessage: { data }})
+      pubsub.publish(NEW_MESSAGE, {newMessage: messageData})
+      console.log("MESSAGE --", data)
       return data;
     },
     addCypherUser: async (parent, _id, context) => {
