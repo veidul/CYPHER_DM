@@ -30,8 +30,8 @@ export default function CypherMenu({
     });
 
     //filter all undefined cyphers
-    newCypherArr = newCypherArr.filter((cypher) => cypher !== undefined);
-    console.log("from line 55 \n", newCypherArr);
+    newCypherArr = newCypherArr.reverse().filter((cypher) => cypher !== undefined);
+    
   }
 
   return (
