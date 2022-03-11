@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Auth from "../utils/auth";
 import Message from "./Message";
 import { useMutation, useQuery } from "@apollo/client";
@@ -33,32 +33,44 @@ export default function ChatWindow({
       });
     },
   });
-
   const submitHandler = async () => {
-    const text = document.getElementById("inputText").value;
+    let text = document.getElementById("inputText").value;
     await addMessage({
       variables: {
         messageText: text,
         cypherId: chatWindowData._id,
       },
     });
+    text = document.getElementById("inputText").value = "";
   };
+  // scrolls to bottom of chat window
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatWindowData]);
+
   return (
     <>
-      <div className="float-right flex-col relative h-screen w-9/12 bg-red">
-        <div className="bg-red relative h-5/6 border-2 rounded-t border-black mt-1 m-l-1 overflow-auto">
-          {chatWindowData.messages
-            ? chatWindowData.messages.map((message) => (
-                <Message
-                  key={Math.random()}
-                  message={message}
-                  setChatWindowData={setChatWindowData}
-                  chatWindowData={chatWindowData}
-                />
-              ))
-            : "Messages are loading!"}
+      <div className="float-right flex-col relative h-screen w-9/12">
+        <div className="relative h-5/6 border-2 rounded-t border-black overflow-auto">
+          <ul className="space-y-12 grid grid-cols-1">
+            {chatWindowData.messages
+              ? chatWindowData.messages.map((message) => (
+                  <Message
+                    key={Math.random()}
+                    message={message}
+                    setChatWindowData={setChatWindowData}
+                    chatWindowData={chatWindowData}
+                  />
+                ))
+              : "Messages are loading!"}
+          </ul>
+          <div ref={messagesEndRef} />
         </div>
-        <div className="bg-blue absolute w-full h-1/6 border-x-2 rounded-b border-b-2 border-black">
+        <div className="absolute w-full h-1/6 border-x-2 rounded-b border-b-2 border-black">
           <input
             id="inputText"
             className="absolute h-full w-full px-3 py-2 text-black placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-300 rounded

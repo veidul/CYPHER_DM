@@ -71,10 +71,26 @@ function App() {
       <Router>
         <>
           <Nav />
-          <div className="dark:bg-gray-900 dark:text-gray-300 h-screen">
+          <div className="bg-gray-900 text-gray-300 h-screen">
             <Routes>
-              <Route path="/" element={<RequireAuth> <Home /> </RequireAuth>} />
-              <Route path="/about" element={<RequireAuth> <About /> </RequireAuth>} />
+              <Route
+                path="/"
+                element={
+                  <RequireAuth>
+                    {" "}
+                    <Home />{" "}
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/about"
+                element={
+                  <RequireAuth>
+                    {" "}
+                    <About />{" "}
+                  </RequireAuth>
+                }
+              />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<LoginForm />} />
               <Route

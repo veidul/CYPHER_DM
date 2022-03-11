@@ -10,7 +10,6 @@ export default function componentName() {
   const [chatWindowData, setChatWindowData] = useState([]);
   const { loading, data } = useQuery(GET_ME);
   const { loading: cypherLoading, data: cypherData } = useQuery(GET_CYPHERS);
-
   const { loading: cypherAddedLoading, data: newCypherData } =
     useSubscription(CYPHER_ADDED);
   const { __typename, ...userData } = data?.me || {};
@@ -22,7 +21,7 @@ export default function componentName() {
   return (
     <>
       <div className="flex flex-row">
-        <div className="float-left flex-col relative flex h-screen w-3/12 bg-white">
+        <div className="float-left flex-col relative flex h-screen w-3/12 bg-gray-900">
           {/* <div className="flex flex-col h-1/6 bg-white border-x-2 border-t-2 mt-1 ml-1 rounded-t border-black">
             <h1 className=" text-center border-b-2 h-2/6 border-black text-black">
               Cyphers
@@ -44,8 +43,8 @@ export default function componentName() {
             cypherLoading={cypherLoading}
             cypherData={cypherData}
             chatWindowData={chatWindowData}
-            setChatWindowData={setChatWindowData} 
-            />
+            setChatWindowData={setChatWindowData}
+          />
           <CypherMenu
             userData={userData}
             cypherLoading={cypherLoading}

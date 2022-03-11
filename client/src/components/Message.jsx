@@ -1,4 +1,5 @@
 import React from "react";
+import Auth from "../utils/auth";
 
 export default function Message({
   cypherData,
@@ -6,27 +7,33 @@ export default function Message({
   setChatWindowData,
   chatWindowData,
 }) {
+  console.log(message, "message info");
+  const user = Auth.getUser(); // the currently logged in user
+  console.log(user, "line 11 user id on message.jsx");
+  function isMessageFromUser() {
+    return user === message.username;
+  }
+  console.log(isMessageFromUser());
   return (
     <>
-      <div className="bg-slate-900 rounded px-1 pt-1 pb-1 sm:p-6 sm:pb-4">
-        <div className="flex items-start">
-          <div className="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <div className="flex justify-start mt-1">
-              <p className="text-sm text-white">
-                {message.createdAt ? message.createdAt : "no message"}
-              </p>
-            </div>
-            <div className="flex">
-              <h3 className="text-md leading-6 font-medium text-white">
-                {message.username ? message.username : "no message"}-
-              </h3>
-              <p className="text-md font-bold text-white">
-                {message.messageText ? message.messageText : "no message"}
-              </p>
-            </div>
-          </div>
+      <div
+        className={`relative ${
+          isMessageFromUser() ? "place-self-end" : "place-self-start"
+        } space-y-2`}
+      >
+        <div className="absolute inset-1 bg-sky-800 rounded-lg blur"></div>
+        <div
+          className={`relative font-mono text-lg text-corn-silk ${
+            isMessageFromUser() ? "rounded-tr-none bg-purple-700 p-5 rounded-2xl" : "rounded-tl-none bg-gray-500 p-5 rounded-2xl"
+          }`}
+        >
+          {message.createdAt ? message.createdAt : "no timestamp"}
+          <br />
+          {message.username ? message.username : "no username"} :{" "}
+          {message.messageText ? message.messageText : "no message"}
         </div>
       </div>
+
     </>
   );
 }
