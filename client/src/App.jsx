@@ -21,14 +21,14 @@ import Nav from "./components/Nav";
 import Auth from "./utils/auth";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: process.env.NODE_ENV === "production" ? "https://sheltered-plateau-08067.herokuapp.com/graphql" : 'http://localhost:3001/graphql'
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
     url:
       process.env.NODE_ENV === "production"
-        ? "ws://something.herokuapp.com"
+        ? "wss://sheltered-plateau-08067.herokuapp.com/graphql"
         : "ws://localhost:3001/graphql"
   })
 );
