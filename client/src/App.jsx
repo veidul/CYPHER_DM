@@ -92,8 +92,8 @@ function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="/" element={<Register />} />
-              <Route path="/" element={<LoginForm />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<LoginForm />} />
               <Route
                 render={() => <h1 className="display-2">Wrong page!</h1>}
               />
