@@ -2,8 +2,8 @@
 
 ## Description
 - Was to create a application that allows for multiple user to chat within a selected chat window.
-- We built this project to allow users to create rooms and invite whomever to conversate with. 
-- This solved understanding how to correctly structure GraphQL along with integrating it to our frontend utilizng the built in Websocket known as subscriptions. 
+- We built this project to allow users to create rooms and invite whomever to converse with. 
+- This solved understanding how to correctly structure GraphQL along with integrating it to our frontend utilizing the built in Websocket known as subscriptions. 
 
 ## Table of Contents
 - [Installation](#installation)
