@@ -28,7 +28,7 @@ Navigate to your GitHub repository in the browser and then select the Settings t
 
 Github Contributors
 [Ludie](https://github.com/veidul)
-[Braulio](https://github.com/scorpion77777)
+[Braulio](https://github.com/BraulioCP59)
 [Naji](https://github.com/nodgyd)
 
 Tech Stack

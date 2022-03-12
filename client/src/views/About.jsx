@@ -74,12 +74,9 @@ export default function componentName() {
           </div>
           <br />
           <p className="font-bold">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc
-            mattis enim ut tellus elementum. Ornare lectus sit amet est placerat
-            in egestas. Augue mauris augue neque gravida in. Vel eros donec ac
-            odio tempor orci dapibus ultrices. In eu mi bibendum neque egestas
-            congue.
+           Corporate Business Analyst from OC who is passionate about anything and everything tech related.
+           Currently working towards possibly entering a career as a software engineer pushing technology forward.
+           Love basketball, video games, and technology!
           </p>
         </div>
       </div>
