@@ -35,12 +35,11 @@ export default function componentName() {
             </div>
             <br />
             <p className="font-bold">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc
-              mattis enim ut tellus elementum. Ornare lectus sit amet est
-              placerat in egestas. Augue mauris augue neque gravida in. Vel eros
-              donec ac odio tempor orci dapibus ultrices. In eu mi bibendum
-              neque egestas congue.
+              10+ years of experience working in the dental technology
+              field as a dental tech, CAD/CAM product owner, business systems analyst
+              and operations manager. I am ready to shift into what I am most passionate about,
+              fullstack web development. I enjoy spending time in nature with my wife and son.
+              I do it all for them.
             </p>
           </div>
         </div>
