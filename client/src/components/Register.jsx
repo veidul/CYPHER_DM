@@ -22,7 +22,8 @@ const Register = () => {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  const handleFormSubmit = async (data) => {
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
     // add form validation here
 
     try {
@@ -59,7 +60,7 @@ const Register = () => {
           </Link>
         </span>
         <div className="p-6 mt-8">
-          <form onSubmit={handleSubmit(handleFormSubmit)}>
+          <form onSubmit={(event) => handleSubmit(handleFormSubmit(event))}>
             <div className="flex flex-col mb-2">
               <div className=" relative ">
                 <input
