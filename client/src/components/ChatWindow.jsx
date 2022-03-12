@@ -62,6 +62,17 @@ export default function ChatWindow({
     scrollToBottom();
   }, [chatWindowData]);
 
+  const activateMessenger = () =>{
+    const messenger = document.getElementById("inputText");
+    messenger.classList.replace('bg-slate-700', 'bg-slate-600');
+  }
+
+  const disableMessenger = () =>{
+    const messenger = document.getElementById("inputText");
+    messenger.classList.replace('bg-slate-600','bg-slate-700');
+  }
+
+
   return (
     <>
       <div className="float-right flex-col relative h-screen w-9/12">
@@ -82,8 +93,10 @@ export default function ChatWindow({
         </div>
         <div className="absolute w-full h-1/6 border-x-2 rounded-b border-b-2 border-black">
           <input
+            onFocus={activateMessenger}
+            onBlur={disableMessenger}
             id="inputText"
-            className="absolute h-full w-full px-3 py-2 text-black placeholder-gray-400 transition duration-100 ease-in-out bg-white border border-gray-300 rounded
+            className="absolute h-full w-full px-3 py-2 text-corn-silk font-mono placeholder-gray-400 transition duration-100 ease-in-out bg-slate-700 border border-gray-300 rounded
        shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed
 "
           />
