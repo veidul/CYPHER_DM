@@ -46,7 +46,6 @@ Tech Stack
 ## Features
 - User login and logout with hashed password
 - React Framework
-- A noSQL database that is store in the cloud. 
-- Ability for user to create/join chat rooms. 
-- 
-- Winner logic that shows who is winning based on color order first green last red!
+- A noSQL database that stores data in the cloud. 
+- Ability for user to create/join chat rooms.
+- Live conversations that is setup because of a websocket.  
