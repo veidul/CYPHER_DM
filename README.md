@@ -1,38 +1,52 @@
-<h1 align='center'>⚡️ Vite React Tailwind Template</h1>
+# Cypher DM
 
-<p align='center'>
-<img src='./src/logo.svg' height='150'/>
-</p>
+## Description
+- Was to create a application that allows for multiple user to chat within a selected chat window.
+- We built this project to allow users to create rooms and invite whomever to conversate with. 
+- This solved understanding how to correctly structure GraphQL along with integrating it to our frontend utilizng the built in Websocket known as subscriptions. 
 
-[Vite](https://github.com/vitejs/vite) is an opinionated web dev build tool that serves your code via native ES Module imports during dev and bundles it for production.
-
-## why vite
-
-- Lightning fast cold server start
-- Instant hot module replacement (HMR)
-
-Repo for [Vite](https://github.com/vuejs/vite) + [React](https://github.com/facebook/react) + [Tailwind](https://github.com/tailwindlabs/tailwindcss)
-
-🌐 [Live Demo](https://vite-react-starter.netlify.app/)
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
+- [Features](#features)
 
 ## Installation
+Create a new repository on your GitHub account and clone it to your computer.
 
-`yarn`
+When you're ready to deploy, use the git add, git commit, and git push commands to save and push your code to your GitHub repository.
 
-## Development
+Navigate to your GitHub repository in the browser and then select the Settings tab on the right side of the page.
 
-`yarn dev`
+## Usage
+[Project.io](https://sheltered-plateau-08067.herokuapp.com/)
 
-## Build
+![screenshot1](./screenshot1.png)
 
-`yarn build` then open http://localhost:3000 in your browser
+## Credits
 
-## Inpsiration
+Github Contributors
+[Ludie](https://github.com/veidul)
+[Braulio](https://github.com/scorpion77777)
+[Naji](https://github.com/nodgyd)
 
-This project is totally inspired by [Anthony Fu's](https://github.com/antfu/vite-vueuse-starter) vite vue template
-
-You can also check out [TailBlocks](https://github.com/mertJF/tailblocks) for Ready to use Tailwind CSS blocks.
+Tech Stack
+- Tailwind CSS
+- GraphQL
+- Apollo Server
+- JWT
+- Mongoose
+- React
+- MongoDB
 
 ## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[MIT](http://opensource.org/licenses/MIT)
+## Features
+- User login and logout with hashed password
+- React Framework
+- A noSQL database that is store in the cloud. 
+- Ability for user to create/join chat rooms. 
+- 
+- Winner logic that shows who is winning based on color order first green last red!
