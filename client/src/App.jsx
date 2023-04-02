@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import "./assets/css/App.css";
 import "./assets/css/output.css";
-import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import {
   ApolloClient,
   ApolloProvider,
@@ -21,15 +27,18 @@ import Nav from "./components/Nav";
 import Auth from "./utils/auth";
 
 const httpLink = new HttpLink({
-  uri: process.env.NODE_ENV === "production" ? "https://sheltered-plateau-08067.herokuapp.com/graphql" : 'http://localhost:3001/graphql'
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://cypher-dm-lu.herokuapp.com/graphql"
+      : "http://localhost:3001/graphql",
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
     url:
       process.env.NODE_ENV === "production"
-        ? "wss://sheltered-plateau-08067.herokuapp.com/graphql"
-        : "ws://localhost:3001/graphql"
+        ? "wss://cypher-dm-lu.herokuapp.com/graphql"
+        : "ws://localhost:3001/graphql",
   })
 );
 
@@ -56,13 +65,13 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(splitLink),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 //basic functional component that returns an element passed via props if auth
 //this component wraps our views and returns them based on auth in the routs section below
 function RequireAuth({ children }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return Auth.loggedIn() ? children : <Navigate to="/login"></Navigate>;
 }
 
