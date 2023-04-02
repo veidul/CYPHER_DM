@@ -37,7 +37,7 @@ const wsLink = new GraphQLWsLink(
   createClient({
     url:
       process.env.NODE_ENV === "production"
-        ? "wss://cypher-dm-lu/graphql"
+        ? "wss://cypher-dm-lu.herokuapp.com/graphql"
         : "ws://localhost:3001/graphql",
   })
 );
